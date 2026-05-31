@@ -1,0 +1,6 @@
+"""Shared demo identifiers for tests."""
+
+import uuid
+
+DEMO_TENANT_ID = uuid.UUID("00000000-0000-0000-0000-000000000001")
+DEMO_STORE_ID = uuid.UUID("00000000-0000-0000-0000-000000000101")

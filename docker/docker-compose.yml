@@ -1,0 +1,9 @@
+# Deprecated path — use the root compose file instead:
+#
+#   cd ..
+#   docker compose up --build
+#
+# This file includes the root stack for backward compatibility when run from docker/.
+
+include:
+  - path: ../docker-compose.yml

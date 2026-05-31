@@ -1,0 +1,218 @@
+[
+  {
+    "events": [
+      {
+        "event_id": "c7ffab28-2112-4213-b712-b2b561ada4d6",
+        "event_type": "vision.frame.processed",
+        "schema_version": "1.0.0",
+        "tenant_id": "00000000-0000-0000-0000-000000000001",
+        "store_id": "00000000-0000-0000-0000-000000000101",
+        "occurred_at": "2026-05-30T08:57:46.676966Z",
+        "correlation_id": "sample-events",
+        "idempotency_key": "frame-00000000-0000-0000-0000-000000000203-120-9297ad56-ec4a-41e8-bd90-37118cc6db0b",
+        "aggregate": {
+          "type": "pipeline_run",
+          "id": "9297ad56-ec4a-41e8-bd90-37118cc6db0b"
+        },
+        "payload": {
+          "pipeline_run_id": "9297ad56-ec4a-41e8-bd90-37118cc6db0b",
+          "camera_id": "00000000-0000-0000-0000-000000000203",
+          "frame_index": 120,
+          "frame_timestamp": "2026-05-30T08:57:46.676966Z",
+          "detections": [
+            {
+              "detection_id": "3c73b053-d809-4ec8-aed7-6087bec5b47b",
+              "class_external_id": "visitor",
+              "bbox": {
+                "x": 0.42,
+                "y": 0.35,
+                "w": 0.08,
+                "h": 0.22,
+                "space": "normalized"
+              },
+              "confidence": 0.91
+            }
+          ],
+          "tracks": [
+            {
+              "track_id": "ecc8fc26-a51c-4356-a984-d0626a299db0",
+              "track_id_ext": 1,
+              "detection_id": "3c73b053-d809-4ec8-aed7-6087bec5b47b",
+              "state": "active",
+              "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c"
+            }
+          ],
+          "processing_ms": 42,
+          "store_id": "00000000-0000-0000-0000-000000000101"
+        }
+      },
+      {
+        "event_id": "4d750d14-9a16-42c0-8865-7dbdda1f4336",
+        "event_type": "vision.zone.entered",
+        "schema_version": "1.0.0",
+        "tenant_id": "00000000-0000-0000-0000-000000000001",
+        "store_id": "00000000-0000-0000-0000-000000000101",
+        "occurred_at": "2026-05-30T08:57:46.676966Z",
+        "correlation_id": "sample-events",
+        "idempotency_key": "vision.zone.entered-00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c-zone-cam3-entry-threshold-1780131466676",
+        "aggregate": {
+          "type": "zone",
+          "id": "abbe61ac-fe62-5643-bf17-a66b700d9dec"
+        },
+        "payload": {
+          "zone_id": "zone-cam3-entry-threshold",
+          "zone_name": "entry_threshold",
+          "zone_type": "entry_threshold",
+          "camera_id": "00000000-0000-0000-0000-000000000203",
+          "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c",
+          "class_label": "visitor",
+          "position": {
+            "x": 0.46,
+            "y": 0.57,
+            "space": "normalized"
+          },
+          "session_id": "acdd776b-b088-4fb7-a2f2-49c360c04094",
+          "direction": "in",
+          "is_store_entry": true,
+          "store_id": "00000000-0000-0000-0000-000000000101"
+        }
+      },
+      {
+        "event_id": "d8316522-fbec-4252-a083-e7b09518ae35",
+        "event_type": "vision.zone.exited",
+        "schema_version": "1.0.0",
+        "tenant_id": "00000000-0000-0000-0000-000000000001",
+        "store_id": "00000000-0000-0000-0000-000000000101",
+        "occurred_at": "2026-05-30T08:58:46.676966Z",
+        "correlation_id": "sample-events",
+        "idempotency_key": "vision.zone.exited-00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c-zone-cam1-browse-left-1780131526676",
+        "aggregate": {
+          "type": "zone",
+          "id": "04a7fd9e-e0e4-508d-95a2-0dfebdcf2bdb"
+        },
+        "payload": {
+          "zone_id": "zone-cam1-browse-left",
+          "zone_name": "browse_skincare_wall",
+          "zone_type": "browse_skincare",
+          "camera_id": "00000000-0000-0000-0000-000000000203",
+          "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c",
+          "class_label": "visitor",
+          "position": {
+            "x": 0.46,
+            "y": 0.57,
+            "space": "normalized"
+          },
+          "session_id": "acdd776b-b088-4fb7-a2f2-49c360c04094",
+          "dwell_ms": 45000,
+          "store_id": "00000000-0000-0000-0000-000000000101"
+        }
+      }
+    ]
+  },
+  {
+    "event_id": "c7ffab28-2112-4213-b712-b2b561ada4d6",
+    "event_type": "vision.frame.processed",
+    "schema_version": "1.0.0",
+    "tenant_id": "00000000-0000-0000-0000-000000000001",
+    "store_id": "00000000-0000-0000-0000-000000000101",
+    "occurred_at": "2026-05-30T08:57:46.676966Z",
+    "correlation_id": "sample-events",
+    "idempotency_key": "frame-00000000-0000-0000-0000-000000000203-120-9297ad56-ec4a-41e8-bd90-37118cc6db0b",
+    "aggregate": {
+      "type": "pipeline_run",
+      "id": "9297ad56-ec4a-41e8-bd90-37118cc6db0b"
+    },
+    "payload": {
+      "pipeline_run_id": "9297ad56-ec4a-41e8-bd90-37118cc6db0b",
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "frame_index": 120,
+      "frame_timestamp": "2026-05-30T08:57:46.676966Z",
+      "detections": [
+        {
+          "detection_id": "3c73b053-d809-4ec8-aed7-6087bec5b47b",
+          "class_external_id": "visitor",
+          "bbox": {
+            "x": 0.42,
+            "y": 0.35,
+            "w": 0.08,
+            "h": 0.22,
+            "space": "normalized"
+          },
+          "confidence": 0.91
+        }
+      ],
+      "tracks": [
+        {
+          "track_id": "ecc8fc26-a51c-4356-a984-d0626a299db0",
+          "track_id_ext": 1,
+          "detection_id": "3c73b053-d809-4ec8-aed7-6087bec5b47b",
+          "state": "active",
+          "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c"
+        }
+      ],
+      "processing_ms": 42,
+      "store_id": "00000000-0000-0000-0000-000000000101"
+    }
+  },
+  {
+    "event_id": "4d750d14-9a16-42c0-8865-7dbdda1f4336",
+    "event_type": "vision.zone.entered",
+    "schema_version": "1.0.0",
+    "tenant_id": "00000000-0000-0000-0000-000000000001",
+    "store_id": "00000000-0000-0000-0000-000000000101",
+    "occurred_at": "2026-05-30T08:57:46.676966Z",
+    "correlation_id": "sample-events",
+    "idempotency_key": "vision.zone.entered-00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c-zone-cam3-entry-threshold-1780131466676",
+    "aggregate": {
+      "type": "zone",
+      "id": "abbe61ac-fe62-5643-bf17-a66b700d9dec"
+    },
+    "payload": {
+      "zone_id": "zone-cam3-entry-threshold",
+      "zone_name": "entry_threshold",
+      "zone_type": "entry_threshold",
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c",
+      "class_label": "visitor",
+      "position": {
+        "x": 0.46,
+        "y": 0.57,
+        "space": "normalized"
+      },
+      "session_id": "acdd776b-b088-4fb7-a2f2-49c360c04094",
+      "direction": "in",
+      "is_store_entry": true,
+      "store_id": "00000000-0000-0000-0000-000000000101"
+    }
+  },
+  {
+    "event_id": "d8316522-fbec-4252-a083-e7b09518ae35",
+    "event_type": "vision.zone.exited",
+    "schema_version": "1.0.0",
+    "tenant_id": "00000000-0000-0000-0000-000000000001",
+    "store_id": "00000000-0000-0000-0000-000000000101",
+    "occurred_at": "2026-05-30T08:58:46.676966Z",
+    "correlation_id": "sample-events",
+    "idempotency_key": "vision.zone.exited-00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c-zone-cam1-browse-left-1780131526676",
+    "aggregate": {
+      "type": "zone",
+      "id": "04a7fd9e-e0e4-508d-95a2-0dfebdcf2bdb"
+    },
+    "payload": {
+      "zone_id": "zone-cam1-browse-left",
+      "zone_name": "browse_skincare_wall",
+      "zone_type": "browse_skincare",
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "external_track_id": "00000000-0000-0000-0000-000000000101:4690a723-f777-4586-b0d6-44500898ad9c",
+      "class_label": "visitor",
+      "position": {
+        "x": 0.46,
+        "y": 0.57,
+        "space": "normalized"
+      },
+      "session_id": "acdd776b-b088-4fb7-a2f2-49c360c04094",
+      "dwell_ms": 45000,
+      "store_id": "00000000-0000-0000-0000-000000000101"
+    }
+  }
+]

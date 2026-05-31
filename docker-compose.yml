@@ -1,0 +1,100 @@
+# Store Intelligence — production-ready local / single-node deployment
+#
+# Quick start (from repository root):
+#   git clone <repo>
+#   cd Smart-AI-StoreSurveillance
+#   docker compose up --build
+#
+# API:     http://localhost:8000
+# Docs:    http://localhost:8000/docs
+# Health:  http://localhost:8000/health
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-si}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-si}
+      POSTGRES_DB: ${POSTGRES_DB:-store_intelligence}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-si} -d ${POSTGRES_DB:-store_intelligence}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${API_PORT:-8000}:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-si}:${POSTGRES_PASSWORD:-si}@postgres:5432/${POSTGRES_DB:-store_intelligence}
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      LOG_JSON: ${LOG_JSON:-true}
+      API_PREFIX: ${API_PREFIX:-/api/v1}
+      SEED_DEMO_DATA: ${SEED_DEMO_DATA:-true}
+      POS_AUTO_INGEST: ${POS_AUTO_INGEST:-true}
+      POS_CSV_PATH: ${POS_CSV_PATH:-data/pos/Brigade_Bangalore_10_April_26.csv}
+      CCTV_AUTO_BOOTSTRAP: ${CCTV_AUTO_BOOTSTRAP:-true}
+      CCTV_BOOTSTRAP_PATH: ${CCTV_BOOTSTRAP_PATH:-data/reviewer/yolo_bootstrap_events.jsonl}
+      HEALTH_STALE_FEED_MINUTES: ${HEALTH_STALE_FEED_MINUTES:-15}
+      API_KEY: ${API_KEY:-purple-demo-key}
+      API_KEY_REQUIRED: ${API_KEY_REQUIRED:-true}
+      REVIEWER_MODE: ${REVIEWER_MODE:-true}
+      REVIEWER_API_BASE_URL: ${REVIEWER_API_BASE_URL:-http://localhost:8000}
+      METRICS_PROJECTOR_ENABLED: ${METRICS_PROJECTOR_ENABLED:-true}
+      DB_WAIT_MAX_ATTEMPTS: ${DB_WAIT_MAX_ATTEMPTS:-30}
+      DB_WAIT_INTERVAL_SECONDS: ${DB_WAIT_INTERVAL_SECONDS:-2}
+      UVICORN_WORKERS: ${UVICORN_WORKERS:-1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "scripts/healthcheck.py"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    volumes:
+      - ./data/pos:/srv/data/pos:ro
+      - ./data/reviewer:/srv/data/reviewer:ro
+    restart: unless-stopped
+
+  pipeline-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.pipeline-worker
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-si}:${POSTGRES_PASSWORD:-si}@postgres:5432/${POSTGRES_DB:-store_intelligence}
+      PIPELINE_API_BASE: http://api:8000
+      PIPELINE_MODE: ${PIPELINE_MODE:-yolo}
+      PIPELINE_MAX_FRAMES: ${PIPELINE_MAX_FRAMES:-50}
+      PIPELINE_ALL_VIDEOS: ${PIPELINE_ALL_VIDEOS:-1}
+      PIPELINE_CAMERAS: ${PIPELINE_CAMERAS:-CAM 1,CAM 2,CAM 3,CAM 4,CAM 5}
+      PIPELINE_API_URL: http://api:8000/api/v1/events/ingest
+      API_KEY: ${API_KEY:-purple-demo-key}
+    volumes:
+      - ./data/videos:/srv/data/videos:ro
+      - ./data/pipeline:/srv/data/pipeline
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,73 @@
+{
+  "generated_at": "2026-05-30T16:44:05.739995+00:00",
+  "link_stats": {
+    "billing_tracks": 5,
+    "linked": 5,
+    "matches": [
+      {
+        "track_id": "...1385c11bcefb",
+        "invoice": "ML0426KAP0001321",
+        "method": "sequential",
+        "confidence": "0.75"
+      },
+      {
+        "track_id": "...c44bd17ffd35",
+        "invoice": "ML0426KAP0001324",
+        "method": "sequential",
+        "confidence": "0.75"
+      },
+      {
+        "track_id": "...51c378b25a59",
+        "invoice": "ML0426KAP0001333",
+        "method": "sequential",
+        "confidence": "0.75"
+      },
+      {
+        "track_id": "...e909c54fea49",
+        "invoice": "ML0426KAP0001336",
+        "method": "sequential",
+        "confidence": "0.75"
+      },
+      {
+        "track_id": "...b8715535204f",
+        "invoice": "ML0426KAP0001337",
+        "method": "sequential",
+        "confidence": "0.75"
+      }
+    ]
+  },
+  "funnel_meta": {
+    "partial": false,
+    "source": "funnel_engine",
+    "message": null,
+    "unique_visitors_source": "external_track_id",
+    "session_count": 1,
+    "linked_purchases": 5,
+    "pos_orphan_purchases": 19,
+    "complete_journeys": 5,
+    "journeys_with_billing": 5,
+    "billing_to_purchase_rate": 1.0,
+    "journey_stages": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ]
+  },
+  "journey_meta": {
+    "source": "retail_journey_engine",
+    "linked_purchases": 5,
+    "pos_orphan_purchases": 19,
+    "complete_journeys": 5,
+    "journeys_with_billing": 5,
+    "billing_to_purchase_rate": 1.0,
+    "journey_stages": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ]
+  },
+  "complete_journey_count": 5,
+  "purchase_stage_count": 24
+}

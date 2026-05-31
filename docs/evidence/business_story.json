@@ -1,0 +1,162 @@
+{
+  "generated_at": "2026-05-30T18:35:07.141014+00:00",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "period_start": "2026-04-30T18:35:05.644674+00:00",
+  "period_end": "2026-05-30T18:35:05.644674+00:00",
+  "unique_visitors": 32,
+  "stages": {
+    "ENTRY": {
+      "count": 2,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "re_entry_count": 3
+    },
+    "ZONE_VISIT": {
+      "count": 17,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "re_entry_count": 105
+    },
+    "BILLING_QUEUE": {
+      "count": 8,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "re_entry_count": 10
+    },
+    "PURCHASE": {
+      "count": 0,
+      "conversion_rate": null,
+      "drop_off_rate": null,
+      "re_entry_count": 0
+    }
+  },
+  "stage_order": [
+    "ENTRY",
+    "ZONE_VISIT",
+    "BILLING_QUEUE",
+    "PURCHASE"
+  ],
+  "stage_labels": {
+    "ENTRY": "Visitor",
+    "ZONE_VISIT": "Zone Visit",
+    "BILLING_QUEUE": "Billing Queue",
+    "PURCHASE": "Purchase"
+  },
+  "meta": {
+    "partial": false,
+    "source": "funnel_engine",
+    "message": null,
+    "unique_visitors_source": "external_track_id",
+    "session_count": 1,
+    "stage_labels": {
+      "ENTRY": "Visitor",
+      "ZONE_VISIT": "Zone Visit",
+      "BILLING_QUEUE": "Billing Queue",
+      "PURCHASE": "Purchase"
+    },
+    "business_story": [
+      {
+        "stage": "ENTRY",
+        "label": "Visitor",
+        "source": "CCTV pipeline",
+        "signal": "Customer session started (store entry / CAM 3 threshold)"
+      },
+      {
+        "stage": "ZONE_VISIT",
+        "label": "Zone Visit",
+        "source": "CCTV pipeline",
+        "signal": "vision.zone.entered \u2014 browse, aisle, consultation, promo zones"
+      },
+      {
+        "stage": "BILLING_QUEUE",
+        "label": "Billing Queue",
+        "source": "CCTV pipeline",
+        "signal": "vision.zone.entered \u2014 billing_queue, checkout, queue zones"
+      },
+      {
+        "stage": "PURCHASE",
+        "label": "Purchase",
+        "source": "POS / analytics",
+        "signal": "Completed transaction or analytics.purchase.completed event"
+      }
+    ],
+    "conversion_formula": "Sequential conversion: for stage S, count visitors who reached both S and the next stage, divide by visitors who reached S, cap at 100%. drop_off_rate = 1 \u2212 conversion_rate. PURCHASE is terminal (no downstream rate).",
+    "end_to_end_conversion_formula": "Overall purchase conversion (dashboard KPI): min(PURCHASE.count, ENTRY.count) / ENTRY.count, capped at 100% when POS and CCTV windows differ.",
+    "stage_order": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ],
+    "linked_purchases": 0,
+    "pos_orphan_purchases": 0,
+    "complete_journeys": 0,
+    "journeys_with_billing": 8,
+    "billing_to_purchase_rate": 0.0,
+    "journey_stages": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ]
+  },
+  "journeys_total": 27,
+  "journeys_complete": 0,
+  "journey_meta": {
+    "source": "retail_journey_engine",
+    "linked_purchases": 0,
+    "pos_orphan_purchases": 0,
+    "complete_journeys": 0,
+    "journeys_with_billing": 8,
+    "billing_to_purchase_rate": 0.0,
+    "journey_stages": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ]
+  },
+  "sample_journeys": [],
+  "story_meta": {
+    "stage_labels": {
+      "ENTRY": "Visitor",
+      "ZONE_VISIT": "Zone Visit",
+      "BILLING_QUEUE": "Billing Queue",
+      "PURCHASE": "Purchase"
+    },
+    "business_story": [
+      {
+        "stage": "ENTRY",
+        "label": "Visitor",
+        "source": "CCTV pipeline",
+        "signal": "Customer session started (store entry / CAM 3 threshold)"
+      },
+      {
+        "stage": "ZONE_VISIT",
+        "label": "Zone Visit",
+        "source": "CCTV pipeline",
+        "signal": "vision.zone.entered \u2014 browse, aisle, consultation, promo zones"
+      },
+      {
+        "stage": "BILLING_QUEUE",
+        "label": "Billing Queue",
+        "source": "CCTV pipeline",
+        "signal": "vision.zone.entered \u2014 billing_queue, checkout, queue zones"
+      },
+      {
+        "stage": "PURCHASE",
+        "label": "Purchase",
+        "source": "POS / analytics",
+        "signal": "Completed transaction or analytics.purchase.completed event"
+      }
+    ],
+    "conversion_formula": "Sequential conversion: for stage S, count visitors who reached both S and the next stage, divide by visitors who reached S, cap at 100%. drop_off_rate = 1 \u2212 conversion_rate. PURCHASE is terminal (no downstream rate).",
+    "end_to_end_conversion_formula": "Overall purchase conversion (dashboard KPI): min(PURCHASE.count, ENTRY.count) / ENTRY.count, capped at 100% when POS and CCTV windows differ.",
+    "stage_order": [
+      "ENTRY",
+      "ZONE_VISIT",
+      "BILLING_QUEUE",
+      "PURCHASE"
+    ]
+  }
+}

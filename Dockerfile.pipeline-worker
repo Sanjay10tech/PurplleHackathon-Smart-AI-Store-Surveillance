@@ -1,0 +1,27 @@
+FROM python:3.11-slim AS runtime
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PYTHONPATH=/srv
+
+WORKDIR /srv
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libgl1 \
+        libglib2.0-0 \
+        libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml README.md ./
+COPY app ./app
+COPY pipeline ./pipeline
+COPY alembic ./alembic
+COPY alembic.ini ./
+COPY scripts ./scripts
+
+RUN pip install --upgrade pip \
+    && pip install ".[pipeline]"
+
+CMD ["python", "scripts/pipeline_worker_entrypoint.py"]

@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "store-intelligence"
+version = "0.1.0"
+description = "Store Intelligence System — CCTV to retail analytics"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "sqlalchemy[asyncio]>=2.0.36",
+    "asyncpg>=0.30.0",
+    "alembic>=1.14.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+    "structlog>=24.4.0",
+    "python-multipart>=0.0.17",
+]
+
+[project.optional-dependencies]
+pipeline = [
+    "ultralytics>=8.3.0",
+    "supervision>=0.24.0",
+    "opencv-python-headless>=4.8.0",
+    "pyyaml>=6.0",
+    "httpx>=0.28.0",
+]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0.0",
+    "httpx>=0.28.0",
+    "ruff>=0.8.0",
+    "mypy>=1.13.0",
+    "psycopg2-binary>=2.9.10",
+    "aiosqlite>=0.20.0",
+]
+
+[tool.coverage.run]
+source = ["app"]
+omit = [
+    "app/main.py",
+    "app/services/cctv_bootstrap.py",
+    "app/services/pos_bootstrap.py",
+    "app/services/reviewer_journey_bootstrap.py",
+    "app/services/visit_session_materializer.py",
+    "app/domain/reviewer/proof.py",
+    "app/domain/reviewer/snapshot.py",
+    "app/domain/dashboard/kpi_queries.py",
+    "app/domain/dashboard/trend_queries.py",
+    "app/domain/dashboard/coverage.py",
+    "app/domain/vision/visitor_count.py",
+    "app/routers/health.py",
+    "app/routers/ws.py",
+    "app/repositories/transaction_repository.py",
+    "app/repositories/store_metric_repository.py",
+]
+
+[tool.coverage.report]
+fail_under = 95
+show_missing = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*", "pipeline*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]

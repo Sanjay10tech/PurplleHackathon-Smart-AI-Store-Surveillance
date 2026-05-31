@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "summary": "7/7 checks passed",
+  "stdout_tail": [
+    "[PASS] GET /health",
+    "[PASS] GET /health/ready",
+    "[PASS] GET /metrics",
+    "[PASS] GET /funnel",
+    "[PASS] GET /heatmap",
+    "[PASS] GET /anomalies",
+    "[PASS] GET /health after checks",
+    "",
+    "7/7 checks passed"
+  ],
+  "recorded_at": "2026-05-30T18:40:00+00:00"
+}

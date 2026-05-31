@@ -1,0 +1,141 @@
+# Brigade Road (ST1008) — CCTV zones mapped to physical store layout
+# Layout source: Brigade_Road_Layout.xlsx (Current revision)
+# Store UUID: 00000000-0000-0000-0000-000000000101
+
+zones:
+  "00000000-0000-0000-0000-000000000201":
+    - zone_id: "zone-cam1-aisle"
+      name: foh_circulation
+      layout_zone_id: foh_circulation
+      zone_type: aisle
+      kind: polygon
+      points: [[0.05, 0.40], [0.95, 0.40], [0.95, 0.95], [0.05, 0.95]]
+    - zone_id: "zone-cam1-promo"
+      name: promo_island_central
+      layout_zone_id: promo_island_central
+      zone_type: promo_island
+      kind: polygon
+      points: [[0.35, 0.62], [0.55, 0.62], [0.55, 0.88], [0.35, 0.88]]
+    - zone_id: "zone-cam1-consultation"
+      name: consultation_skincare
+      layout_zone_id: consultation_skincare
+      zone_type: consultation
+      kind: polygon
+      points: [[0.72, 0.55], [0.95, 0.55], [0.95, 0.85], [0.72, 0.85]]
+    - zone_id: "zone-cam1-browse-left"
+      name: skincare_wall
+      layout_zone_id: skincare_wall
+      zone_type: browse_skincare
+      kind: polygon
+      points: [[0.02, 0.08], [0.98, 0.08], [0.98, 0.35], [0.02, 0.35]]
+    - zone_id: "zone-cam1-aisle-entry-line"
+      name: foh_circulation_entry_line
+      layout_zone_id: foh_circulation
+      zone_type: aisle
+      kind: line
+      counting_only: true
+      points: [[0.05, 0.90], [0.95, 0.90]]
+      direction_normal: [0, -1]
+
+  "00000000-0000-0000-0000-000000000202":
+    - zone_id: "zone-cam2-aisle"
+      name: foh_circulation
+      layout_zone_id: foh_circulation
+      zone_type: aisle
+      kind: polygon
+      points: [[0.05, 0.35], [0.95, 0.35], [0.95, 0.95], [0.05, 0.95]]
+    - zone_id: "zone-cam2-consultation"
+      name: consultation_makeup
+      layout_zone_id: consultation_makeup
+      zone_type: consultation
+      kind: polygon
+      points: [[0.06, 0.45], [0.28, 0.45], [0.28, 0.75], [0.06, 0.75]]
+    - zone_id: "zone-cam2-browse"
+      name: cosmetics_wall
+      layout_zone_id: cosmetics_wall
+      zone_type: browse_cosmetics
+      kind: polygon
+      points: [[0.02, 0.05], [0.98, 0.05], [0.98, 0.32], [0.02, 0.32]]
+    - zone_id: "zone-cam2-promo"
+      name: promo_island_south
+      layout_zone_id: promo_island_south
+      zone_type: promo_island
+      kind: polygon
+      points: [[0.38, 0.68], [0.58, 0.68], [0.58, 0.92], [0.38, 0.92]]
+    - zone_id: "zone-cam2-left-mouth"
+      name: foh_circulation_left_mouth
+      layout_zone_id: foh_circulation
+      zone_type: aisle
+      kind: line
+      counting_only: true
+      points: [[0.10, 0.30], [0.10, 0.80]]
+      direction_normal: [1, 0]
+
+  "00000000-0000-0000-0000-000000000203":
+    - zone_id: "zone-cam3-entry-threshold"
+      name: entrance_threshold
+      layout_zone_id: entrance
+      zone_type: entry_threshold
+      kind: line
+      points: [[0.42, 0.33], [0.68, 0.48]]
+      direction_normal: [0.26, 0.15]
+      entry_side: interior_positive
+    - zone_id: "zone-cam3-entry-landing"
+      name: entrance_landing
+      layout_zone_id: entrance
+      zone_type: entrance
+      kind: polygon
+      require_prior_zone_types: [entry_threshold]
+      dedupe_after_zone_types: [entry_threshold]
+      dedupe_after_seconds: 15
+      points: [[0.05, 0.25], [0.55, 0.25], [0.55, 0.55], [0.05, 0.55]]
+    - zone_id: "zone-cam3-occlusion"
+      name: entrance_occlusion_mask
+      layout_zone_id: entrance
+      zone_type: ignore
+      kind: polygon
+      exclude_detections: true
+      points: [[0.78, 0.0], [1.0, 0.0], [1.0, 1.0], [0.78, 1.0]]
+
+  "00000000-0000-0000-0000-000000000204":
+    - zone_id: "zone-cam4-stock"
+      name: stockroom
+      layout_zone_id: stockroom
+      zone_type: staff_only
+      kind: polygon
+      points: [[0.05, 0.15], [0.95, 0.15], [0.95, 0.95], [0.05, 0.95]]
+    - zone_id: "zone-cam4-door"
+      name: stockroom_door
+      layout_zone_id: stockroom
+      zone_type: staff_only
+      kind: line
+      points: [[0.35, 0.08], [0.55, 0.08]]
+      direction_normal: [0, 1]
+
+  "00000000-0000-0000-0000-000000000205":
+    - zone_id: "zone-cam5-queue"
+      name: billing_queue
+      layout_zone_id: billing_queue
+      zone_type: billing_queue
+      kind: polygon
+      points: [[0.05, 0.45], [0.35, 0.45], [0.35, 0.88], [0.05, 0.88]]
+    - zone_id: "zone-cam5-checkout"
+      name: cash_counter
+      layout_zone_id: cash_counter
+      zone_type: checkout
+      kind: polygon
+      points: [[0.30, 0.35], [0.62, 0.35], [0.62, 0.65], [0.30, 0.65]]
+    - zone_id: "zone-cam5-staff"
+      name: cash_counter_staff
+      layout_zone_id: cash_counter
+      zone_type: staff_only
+      kind: polygon
+      points: [[0.28, 0.30], [0.65, 0.30], [0.65, 0.55], [0.28, 0.55]]
+    - zone_id: "zone-cam5-queue-entry"
+      name: billing_queue_entry_line
+      layout_zone_id: billing_queue
+      zone_type: billing_queue
+      kind: line
+      counting_only: true
+      points: [[0.20, 0.45], [0.20, 0.88]]
+      direction_normal: [1, 0]

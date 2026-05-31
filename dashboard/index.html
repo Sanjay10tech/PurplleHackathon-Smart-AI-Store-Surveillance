@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store Intelligence — Evaluation Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="vendor/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #7c3aed;
+      --accent-soft: rgba(124, 58, 237, 0.12);
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+      --sidebar: 240px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .app { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.25rem 1rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .brand h1 { margin: 0; font-size: 0.95rem; font-weight: 700; }
+    .brand p { margin: 0.25rem 0 0; font-size: 0.72rem; color: var(--muted); }
+    .nav { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+    .nav a {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.55rem 0.75rem; border-radius: 8px;
+      color: var(--muted); text-decoration: none; font-size: 0.84rem; font-weight: 500;
+    }
+    .nav a:hover, .nav a.active { background: var(--accent-soft); color: var(--text); }
+    .nav a.active { color: #c4b5fd; }
+    .sidebar-note { font-size: 0.72rem; color: var(--muted); line-height: 1.45; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; }
+    .main { min-width: 0; }
+    .topbar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); background: var(--surface);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar h2 { margin: 0; font-size: 1.05rem; font-weight: 600; }
+    .status-row { display: flex; gap: 0.5rem; margin-top: 0.35rem; flex-wrap: wrap; }
+    .pill {
+      font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .pill.ok { color: var(--success); border-color: rgba(63,185,80,0.35); }
+    .pill.warn { color: var(--warning); border-color: rgba(210,153,34,0.35); }
+    .pill.err { color: var(--danger); border-color: rgba(248,81,73,0.35); }
+    .controls { display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: flex-end; }
+    .field { display: flex; flex-direction: column; gap: 0.2rem; }
+    .field label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; }
+    .field input {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.45rem 0.65rem; color: var(--text); font-size: 0.82rem; min-width: 220px;
+    }
+    .btn {
+      background: var(--accent); color: #fff; border: 0; border-radius: 6px;
+      padding: 0.5rem 1rem; font-weight: 600; font-size: 0.82rem; cursor: pointer;
+    }
+    .content { padding: 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
+    section { scroll-margin-top: 80px; }
+    .section-title { margin: 0 0 0.15rem; font-size: 0.95rem; font-weight: 600; }
+    .section-sub { margin: 0 0 1rem; font-size: 0.78rem; color: var(--muted); }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.15rem;
+    }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.75rem; }
+    .kpi { padding: 1rem; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+    .kpi-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
+    .kpi-value { margin-top: 0.5rem; font-size: 1.75rem; font-weight: 700; letter-spacing: -0.03em; }
+    .kpi-source { margin-top: 0.35rem; font-size: 0.65rem; color: var(--muted); }
+    .kpi.empty .kpi-value { font-size: 1rem; color: var(--muted); font-weight: 500; }
+    .chart-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+    .chart-wrap { height: 220px; position: relative; }
+    .chart-empty {
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-size: 0.82rem; color: var(--muted); text-align: center; padding: 1rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    th, td { padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border); text-align: left; }
+    th { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+    .table-wrap { max-height: 360px; overflow: auto; }
+    .badge { display: inline-block; padding: 0.15rem 0.45rem; border-radius: 999px; font-size: 0.7rem; font-weight: 600; background: var(--accent-soft); color: #c4b5fd; }
+    .heatmap-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.65rem; margin-bottom: 1rem; }
+    .zone-tile {
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; text-align: center;
+    }
+    .zone-tile .name { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .zone-tile .visits { font-size: 1.35rem; font-weight: 700; }
+    .zone-tile .dwell { font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; }
+    .anomaly-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .anomaly { padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; }
+    .anomaly strong { display: block; font-size: 0.82rem; margin-bottom: 0.25rem; }
+    .anomaly p { margin: 0; font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+    .evidence-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+    .evidence-item .label { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .evidence-item .value { margin-top: 0.35rem; font-size: 1.1rem; font-weight: 600; word-break: break-word; }
+    .evidence-detail { margin-top: 1rem; padding: 0.85rem; border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .reviewer-banner {
+      margin-bottom: 1.25rem; padding: 1rem 1.1rem; border-radius: 10px;
+      border: 1px solid rgba(124, 58, 237, 0.35); background: rgba(124, 58, 237, 0.08);
+    }
+    .reviewer-banner h4 { margin: 0 0 0.35rem; font-size: 0.92rem; }
+    .reviewer-banner p { margin: 0 0 0.75rem; font-size: 0.76rem; color: var(--muted); }
+    .reviewer-score { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.65rem; }
+    .reviewer-checklist { display: grid; gap: 0.35rem; }
+    .reviewer-check {
+      display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.78rem; line-height: 1.35;
+      padding: 0.35rem 0.45rem; border-radius: 6px; background: rgba(255,255,255,0.02);
+    }
+    .reviewer-check .mark { font-weight: 700; min-width: 1rem; }
+    .reviewer-check.pass .mark { color: var(--success); }
+    .reviewer-check.fail .mark { color: var(--danger); }
+    .reviewer-check .ev { color: var(--muted); font-size: 0.72rem; }
+    .hero-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.65rem; margin-bottom: 0.85rem;
+    }
+    .hero-stat {
+      padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg);
+    }
+    .hero-stat .label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
+    .hero-stat .value { margin-top: 0.35rem; font-size: 1.35rem; font-weight: 700; }
+    .hero-stat .hint { margin-top: 0.2rem; font-size: 0.65rem; color: var(--muted); line-height: 1.3; }
+    .footnote-list { margin: 0.75rem 0 0; padding-left: 1.1rem; font-size: 0.74rem; color: var(--muted); line-height: 1.45; }
+    .controls-toggle { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 6px; padding: 0.45rem 0.75rem; font-size: 0.75rem; cursor: pointer; }
+    .controls-panel { display: none; width: 100%; margin-top: 0.65rem; }
+    .controls-panel.open { display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: flex-end; }
+    .banner { padding: 0.75rem 1rem; border: 1px solid rgba(210,153,34,0.35); border-radius: 8px; font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+    .banner.info { border-color: rgba(124,58,237,0.35); background: rgba(124,58,237,0.06); }
+    .api-key-box {
+      padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg); font-size: 0.8rem; margin-bottom: 1rem;
+    }
+    .api-key-box code { color: #c4b5fd; font-weight: 600; }
+    .api-link-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .api-link-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.65rem; border: 1px solid var(--border); border-radius: 8px;
+      background: rgba(255,255,255,0.02);
+    }
+    .api-link-row a, .api-link-row button {
+      font-family: ui-monospace, monospace; font-size: 0.72rem; color: #c4b5fd;
+      text-decoration: none; background: none; border: 0; cursor: pointer; padding: 0;
+    }
+    .api-link-row a:hover, .api-link-row button:hover { text-decoration: underline; }
+    .api-status { font-size: 0.68rem; font-weight: 700; min-width: 3rem; }
+    .api-status.ok { color: var(--success); }
+    .api-status.err { color: var(--danger); }
+    @media (max-width: 1100px) { .chart-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { height: auto; position: relative; }
+      .nav { flex-direction: row; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Store Intelligence</h1>
+        <p>Purple Tech · Evaluation Dashboard</p>
+      </div>
+      <nav class="nav">
+        <a href="#overview" class="active" data-nav="overview"><i data-lucide="layout-dashboard"></i> Overview</a>
+        <a href="#funnel-detail" data-nav="funnel"><i data-lucide="filter"></i> Funnel</a>
+        <a href="#heatmap-detail" data-nav="heatmap"><i data-lucide="map"></i> Heatmap</a>
+        <a href="#metrics-detail" data-nav="metrics"><i data-lucide="activity"></i> Metrics</a>
+        <a href="#anomalies-detail" data-nav="anomalies"><i data-lucide="triangle-alert"></i> Anomalies</a>
+        <a href="#reviewer-evidence" data-nav="evidence"><i data-lucide="clipboard-check"></i> Reviewer Evidence</a>
+      </nav>
+      <div class="sidebar-note">
+        Demo store:<br /><code style="font-size:0.65rem">00000000-0000-0000-0000-000000000101</code><br />
+        API key: <code style="font-size:0.65rem">purple-demo-key</code>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div>
+          <h2>Brigade Road · Store Intelligence</h2>
+          <div class="status-row">
+            <span class="pill" id="liveBadge">Connecting…</span>
+            <span class="pill" id="connection">Awaiting data</span>
+            <span class="pill" id="feedBadge">Feed —</span>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="controls-toggle" id="toggleControls" type="button">Connection settings</button>
+          <div class="controls-panel" id="controlsPanel">
+            <div class="field">
+              <label for="storeId">Store ID</label>
+              <input id="storeId" placeholder="Store UUID" value="00000000-0000-0000-0000-000000000101" readonly />
+            </div>
+            <div class="field">
+              <label for="apiKey">API Key</label>
+              <input id="apiKey" type="text" placeholder="X-API-Key" value="purple-demo-key" autocomplete="off" readonly />
+            </div>
+            <button class="btn" id="refreshBtn" type="button">Refresh</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <article class="card reviewer-banner" id="reviewerBanner">
+          <h4>Purple Reviewer — 2 Minute Proof</h4>
+          <p>Live checklist from <code>/reviewer</code> · PostgreSQL CCTV + POS data</p>
+          <div class="reviewer-score" id="reviewerScore">Loading proof…</div>
+          <div class="reviewer-checklist" id="reviewerChecklist"></div>
+        </article>
+
+        <section id="overview">
+          <h3 class="section-title">Overview — What to verify first</h3>
+          <p class="section-sub" id="kpiPeriod">Analysis period · PostgreSQL pipeline + POS</p>
+          <div id="partialBanner"></div>
+          <div class="hero-grid" id="heroGrid"></div>
+          <ul class="footnote-list" id="footnoteList"></ul>
+          <h4 class="section-title" style="font-size:0.85rem;margin-top:1.25rem">Detailed KPIs</h4>
+          <div class="kpi-grid" id="kpiGrid"><div class="kpi empty"><div class="kpi-label">Loading</div><div class="kpi-value">…</div></div></div>
+          <article class="card" id="posInsightsCard" style="margin-top:1rem;display:none">
+            <h4 class="section-title" style="font-size:0.85rem">POS Insights · Brigade_Bangalore_10_April_26.csv</h4>
+            <div class="evidence-grid" id="posInsightsGrid"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem">
+              <div><h5 style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem">Top Brands (NMV)</h5><div id="topBrandsList"></div></div>
+              <div><h5 style="font-size:0.75rem;color:var(--muted);margin:0 0 0.5rem">Top Categories (NMV)</h5><div id="topCategoriesList"></div></div>
+            </div>
+          </article>
+        </section>
+
+        <section id="funnel-detail">
+          <h3 class="section-title">Funnel</h3>
+          <p class="section-sub">ENTRY → ZONE_VISIT → BILLING_QUEUE → PURCHASE with conversion and drop-off</p>
+          <article class="card">
+            <div class="table-wrap" id="funnelTable">—</div>
+          </article>
+        </section>
+
+        <section id="heatmap-detail">
+          <h3 class="section-title">Heatmap</h3>
+          <p class="section-sub">Store layout zones · visit counts · dwell time (seconds)</p>
+          <article class="card">
+            <div id="layoutMappedNote" class="section-sub" style="margin-top:0"></div>
+            <div class="heatmap-layout" id="heatmapLayout"></div>
+            <div class="table-wrap" id="heatmapTable">—</div>
+          </article>
+        </section>
+
+        <section id="metrics-detail">
+          <h3 class="section-title">Metrics</h3>
+          <p class="section-sub">Hourly trends from PostgreSQL events and POS transactions</p>
+          <div class="chart-grid">
+            <article class="card">
+              <h4 class="section-title" style="font-size:0.85rem">Visitor trend</h4>
+              <div class="chart-wrap"><div class="chart-empty" id="visitorEmpty"></div><canvas id="visitorChart"></canvas></div>
+            </article>
+            <article class="card">
+              <h4 class="section-title" style="font-size:0.85rem">POS revenue trend</h4>
+              <div class="chart-wrap"><div class="chart-empty" id="revenueEmpty"></div><canvas id="revenueChart"></canvas></div>
+            </article>
+            <article class="card">
+              <h4 class="section-title" style="font-size:0.85rem">POS purchases trend</h4>
+              <div class="chart-wrap"><div class="chart-empty" id="purchaseEmpty"></div><canvas id="purchaseChart"></canvas></div>
+            </article>
+            <article class="card">
+              <h4 class="section-title" style="font-size:0.85rem">Footfall trend</h4>
+              <div class="chart-wrap"><div class="chart-empty" id="footfallEmpty"></div><canvas id="footfallChart"></canvas></div>
+            </article>
+            <article class="card">
+              <h4 class="section-title" style="font-size:0.85rem">Queue trend</h4>
+              <div class="chart-wrap"><div class="chart-empty" id="queueEmpty"></div><canvas id="queueChart"></canvas></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="anomalies-detail">
+          <h3 class="section-title">Anomalies</h3>
+          <p class="section-sub">Rule-detected alerts from live funnel, heatmap, and feed data</p>
+          <article class="card">
+            <div id="anomaliesPanel" class="anomaly-list"><p style="color:var(--muted)">Loading…</p></div>
+          </article>
+        </section>
+
+        <section id="reviewer-evidence">
+          <h3 class="section-title">Reviewer Evidence &amp; API Quick-Start</h3>
+          <p class="section-sub">Clickable endpoints with demo store UUID — header <code>X-API-Key: purple-demo-key</code> applied automatically</p>
+          <article class="card">
+            <div class="api-key-box">
+              <strong>Demo credentials</strong><br />
+              Store ID: <code id="demoStoreDisplay">00000000-0000-0000-0000-000000000101</code><br />
+              API Key: <code>purple-demo-key</code> · Public: <a href="/health" target="_blank" rel="noopener">GET /health</a>, <a href="/reviewer" target="_blank" rel="noopener">GET /reviewer</a>, <a href="/docs" target="_blank" rel="noopener">OpenAPI /docs</a>
+            </div>
+            <h4 class="section-title" style="font-size:0.85rem">Protected API routes (demo store)</h4>
+            <div class="api-link-list" id="apiLinkList"></div>
+            <h4 class="section-title" style="font-size:0.85rem;margin-top:1.25rem">Pipeline proof</h4>
+            <div class="evidence-grid" id="evidenceGrid"></div>
+            <div class="evidence-detail" id="detectionEvidence">—</div>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const NO_DATA = "No Data Available";
+    const DEMO_STORE_ID = "00000000-0000-0000-0000-000000000101";
+    const DEMO_API_KEY = "purple-demo-key";
+    const REVIEWER_API_ROUTES = [
+      { label: "Metrics", path: `/api/v1/stores/${DEMO_STORE_ID}/metrics?metric=visitor.count` },
+      { label: "Funnel", path: `/api/v1/stores/${DEMO_STORE_ID}/funnel` },
+      { label: "Heatmap", path: `/api/v1/stores/${DEMO_STORE_ID}/heatmap` },
+      { label: "Anomalies", path: `/api/v1/stores/${DEMO_STORE_ID}/anomalies` },
+      { label: "Dashboard summary", path: `/api/v1/stores/${DEMO_STORE_ID}/dashboard/summary` },
+      { label: "Retail journeys", path: `/api/v1/stores/${DEMO_STORE_ID}/funnel/journeys` },
+      { label: "Re-ID evidence", path: `/api/v1/stores/${DEMO_STORE_ID}/reid/evidence` },
+    ];
+    const OVERVIEW_KPIS = [
+      "total_entries", "total_exits", "re_entries", "unique_visitors",
+      "customer_sessions", "purchases", "revenue", "conversion_rate",
+      "average_basket_value", "queue_depth", "anomalies",
+    ];
+    const KPI_LABELS = {
+      unique_visitors: "Unique Visitors (deduped tracks)",
+      total_entries: "Store Entries (CAM 3)",
+      total_exits: "Store Exits (CAM 3)",
+      re_entries: "Re-Entries",
+      customer_sessions: "Customer Sessions",
+      purchases: "POS Purchases (CSV)",
+      revenue: "Revenue (NMV)",
+      average_basket_value: "Avg Basket",
+      conversion_rate: "Linked Conversion (CCTV↔POS)",
+      queue_depth: "Billing Queue Depth",
+      anomalies: "Anomaly Count",
+    };
+    const STAGE_LABELS = {
+      ENTRY: "Visitor Entry",
+      ZONE_VISIT: "Zone Visit",
+      BILLING_QUEUE: "Billing Queue",
+      PURCHASE: "Purchase (journey)",
+    };
+
+    let refreshIntervalSec = 5;
+    let visitorChart, footfallChart, queueChart, revenueChart, purchaseChart;
+    let periodQuery = "";
+
+    const chartOpts = {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 400 },
+      plugins: {
+        legend: { display: false },
+        tooltip: { backgroundColor: "#161b22", borderColor: "#30363d", borderWidth: 1 },
+      },
+      scales: {
+        x: { ticks: { color: "#8b949e", maxTicksLimit: 8, font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.04)" } },
+        y: { ticks: { color: "#8b949e", font: { size: 10 } }, grid: { color: "rgba(255,255,255,0.04)" }, beginAtZero: true },
+      },
+    };
+
+    function initCharts() {
+      if (typeof Chart === "undefined") return;
+      const mk = (id, color) => new Chart(document.getElementById(id), {
+        type: "line",
+        data: { labels: [], datasets: [{ data: [], borderColor: color, backgroundColor: color + "22", fill: true, tension: 0.35, pointRadius: 2, borderWidth: 2 }] },
+        options: chartOpts,
+      });
+      visitorChart = mk("visitorChart", "#7c3aed");
+      footfallChart = mk("footfallChart", "#3fb950");
+      queueChart = mk("queueChart", "#58a6ff");
+      revenueChart = mk("revenueChart", "#f59e0b");
+      purchaseChart = mk("purchaseChart", "#ec4899");
+    }
+
+    function fmtPct(rate) {
+      return rate == null ? NO_DATA : (rate * 100).toFixed(1) + "%";
+    }
+
+    function renderKpis(kpis, hasData) {
+      const map = Object.fromEntries((kpis || []).map(k => [k.key, k]));
+      document.getElementById("kpiGrid").innerHTML = OVERVIEW_KPIS.map(key => {
+        const kpi = map[key] || {};
+        const formatted = hasData ? (kpi.formatted ?? NO_DATA) : NO_DATA;
+        const empty = formatted === NO_DATA;
+        return `<article class="kpi${empty ? " empty" : ""}">
+          <div class="kpi-label">${KPI_LABELS[key] || key}</div>
+          <div class="kpi-value">${formatted}</div>
+          <div class="kpi-source">${kpi.source || ""}</div>
+        </article>`;
+      }).join("");
+    }
+
+    function renderFunnel(funnel) {
+      const stages = (funnel?.stages || []).filter(s =>
+        ["ENTRY", "ZONE_VISIT", "BILLING_QUEUE", "PURCHASE"].includes(s.stage)
+      );
+      if (!stages.length) {
+        document.getElementById("funnelTable").innerHTML = `<p style="color:var(--muted);padding:0.5rem">${NO_DATA}</p>`;
+        return;
+      }
+      document.getElementById("funnelTable").innerHTML =
+        `<table><thead><tr><th>Stage</th><th>Count</th><th>Re-entry</th><th>Conversion %</th><th>Drop-off %</th></tr></thead><tbody>` +
+        stages.map(s => `<tr>
+          <td><span class="badge">${STAGE_LABELS[s.stage] || s.stage}</span></td>
+          <td>${s.count}</td>
+          <td>${s.re_entry_count ?? 0}</td>
+          <td>${fmtPct(s.conversion_rate)}</td>
+          <td>${fmtPct(s.drop_off_rate)}</td>
+        </tr>`).join("") + `</tbody></table>`;
+    }
+
+    function renderHeatmap(data) {
+      const zones = data?.zones || [];
+      const layoutNote = document.getElementById("layoutMappedNote");
+      layoutNote.textContent = data?.meta?.layout_mapped
+        ? "Layout: Brigade Road floor plan mapped from ingested zone events"
+        : "Layout mapping unavailable — showing raw zone keys from events";
+
+      const layoutEl = document.getElementById("heatmapLayout");
+      const tableEl = document.getElementById("heatmapTable");
+      if (!zones.length) {
+        layoutEl.innerHTML = `<p style="color:var(--muted)">${NO_DATA}</p>`;
+        tableEl.innerHTML = "";
+        return;
+      }
+      const max = Math.max(...zones.map(z => z.visit_count), 1);
+      layoutEl.innerHTML = zones.map(z => {
+        const intensity = z.visit_count / max;
+        return `<div class="zone-tile" style="background:rgba(124,58,237,${0.08 + intensity * 0.35})">
+          <div class="name">${z.zone_label || z.zone_key}</div>
+          <div class="visits">${z.visit_count}</div>
+          <div class="dwell">${z.avg_dwell_seconds != null ? z.avg_dwell_seconds.toFixed(0) + "s dwell" : "— dwell"}</div>
+        </div>`;
+      }).join("");
+      tableEl.innerHTML =
+        `<table><thead><tr><th>Zone</th><th>Section</th><th>Visits</th><th>Dwell (s)</th></tr></thead><tbody>` +
+        zones.map(z => `<tr>
+          <td>${z.zone_label || z.zone_key}</td>
+          <td>${z.layout_section || "—"}</td>
+          <td>${z.visit_count}</td>
+          <td>${z.avg_dwell_seconds != null ? z.avg_dwell_seconds.toFixed(1) : NO_DATA}</td>
+        </tr>`).join("") + `</tbody></table>`;
+    }
+
+    function updateTrendChart(chart, emptyEl, metrics) {
+      const series = metrics?.series || [];
+      if (!chart) return;
+      if (!series.length) {
+        chart.data.labels = [];
+        chart.data.datasets[0].data = [];
+        chart.update();
+        emptyEl.textContent = metrics?.meta?.message || NO_DATA;
+        emptyEl.style.display = "grid";
+        return;
+      }
+      emptyEl.style.display = "none";
+      chart.data.labels = series.map(p => new Date(p.bucket_start).toLocaleString([], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }));
+      chart.data.datasets[0].data = series.map(p => p.value);
+      chart.update();
+    }
+
+    function renderAnomalies(data) {
+      const el = document.getElementById("anomaliesPanel");
+      const items = data?.items || [];
+      if (!items.length) {
+        el.innerHTML = `<p style="color:var(--muted)">${NO_DATA} — no rule-triggered anomalies in the current window.</p>`;
+        return;
+      }
+      el.innerHTML = items.map(a => {
+        const stale = a.anomaly_type === "STALE_FEED";
+        const prefix = stale
+          ? `<p style="font-size:0.74rem;color:var(--warning);margin:0 0 0.5rem">Expected for batch ingest — historical PostgreSQL data remains valid.</p>`
+          : "";
+        return `<div class="anomaly">${prefix}<strong><span class="badge">${a.anomaly_type}</span> · ${new Date(a.detected_at).toLocaleString()}</strong>
+        <p>${a.message}${a.suggested_action ? " — " + a.suggested_action : ""}</p></div>`;
+      }).join("");
+    }
+
+    async function openApiJson(path) {
+      const res = await fetch(path, { headers: { "X-API-Key": DEMO_API_KEY } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = new Blob([JSON.stringify(await res.json(), null, 2)], { type: "application/json" });
+      window.open(URL.createObjectURL(blob), "_blank", "noopener");
+    }
+
+    function renderApiLinkList() {
+      const list = document.getElementById("apiLinkList");
+      list.innerHTML = [
+        { label: "Health", path: "/health", public: true },
+        { label: "Reviewer", path: "/reviewer", public: true },
+        ...REVIEWER_API_ROUTES,
+      ].map(r => `
+        <div class="api-link-row" data-path="${r.path}" data-public="${r.public ? "1" : "0"}">
+          <span class="api-status">…</span>
+          <strong style="font-size:0.72rem;min-width:6rem">${r.label}</strong>
+          <button type="button" class="api-open" data-path="${r.path}" data-public="${r.public ? "1" : "0"}">${r.path}</button>
+        </div>`).join("");
+      list.querySelectorAll(".api-open").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const path = btn.getAttribute("data-path");
+          const isPublic = btn.getAttribute("data-public") === "1";
+          try {
+            if (isPublic) {
+              window.open(path, "_blank", "noopener");
+            } else {
+              await openApiJson(path);
+            }
+          } catch (err) {
+            alert(err.message);
+          }
+        });
+      });
+    }
+
+    async function verifyApiLinks() {
+      const rows = document.querySelectorAll(".api-link-row");
+      for (const row of rows) {
+        const path = row.getAttribute("data-path");
+        const isPublic = row.getAttribute("data-public") === "1";
+        const statusEl = row.querySelector(".api-status");
+        try {
+          const headers = isPublic ? {} : { "X-API-Key": DEMO_API_KEY };
+          const res = await fetch(path, { headers });
+          statusEl.textContent = res.status;
+          statusEl.className = "api-status " + (res.ok ? "ok" : "err");
+        } catch {
+          statusEl.textContent = "ERR";
+          statusEl.className = "api-status err";
+        }
+      }
+    }
+
+    function shortVideoName(path) {
+      if (!path) return "";
+      return String(path).replace(/\\/g, "/").split("/").pop();
+    }
+
+    function renderReviewerChecklist(data) {
+      const score = document.getElementById("reviewerScore");
+      const list = document.getElementById("reviewerChecklist");
+      if (!data || !data.checks) {
+        score.textContent = "Reviewer proof unavailable — run pipeline ingest";
+        list.innerHTML = "";
+        return;
+      }
+      const ready = data.ready_for_review ? "READY FOR REVIEW" : "NEEDS PIPELINE DATA";
+      score.textContent = `${data.checks_passed}/${data.checks_total} checks passed · ${ready}`;
+      list.innerHTML = data.checks.map(c => {
+        let ev = c.evidence || "";
+        if (c.label.includes("CCTV videos")) {
+          const names = (data.summary?.source_videos || []).map(shortVideoName).filter(Boolean);
+          ev = names.length ? `${names.length}/5 cameras: ${names.join(", ")}` : ev;
+        }
+        return `<div class="reviewer-check ${c.passed ? "pass" : "fail"}">
+          <span class="mark">${c.passed ? "✓" : "✗"}</span>
+          <div><strong>${c.label}</strong><div class="ev">${ev}</div></div>
+        </div>`;
+      }).join("");
+    }
+
+    function renderHeadline(headline, hasData) {
+      const el = document.getElementById("heroGrid");
+      const foot = document.getElementById("footnoteList");
+      if (!headline || !hasData) {
+        el.innerHTML = "";
+        foot.innerHTML = "";
+        return;
+      }
+      const rev = headline.pos_revenue_inr != null
+        ? "₹" + Number(headline.pos_revenue_inr).toLocaleString(undefined, { maximumFractionDigits: 0 })
+        : NO_DATA;
+      el.innerHTML = [
+        ["CCTV Videos", headline.cctv_videos, "CAM 1–5 ingested"],
+        ["Vision Events", headline.vision_events, "PostgreSQL pipeline"],
+        ["Entries / Exits", `${headline.entries} / ${headline.exits}`, "CAM 3 threshold"],
+        ["Re-Entries", headline.re_entries, "Funnel re-entry signals"],
+        ["Funnel Purchase", headline.funnel_purchase, "CCTV-linked journeys"],
+        ["POS Purchases", headline.pos_purchases, "Brigade CSV orders"],
+        ["POS Revenue", rev, "NMV from CSV"],
+        ["Linked Purchases", headline.linked_purchases, "CCTV track ↔ POS"],
+      ].map(([label, value, hint]) => `<div class="hero-stat"><div class="label">${label}</div><div class="value">${value}</div><div class="hint">${hint}</div></div>`).join("");
+      foot.innerHTML = (headline.footnotes || []).map(f => `<li>${f}</li>`).join("");
+    }
+
+    function renderFeedBadge(headline) {
+      const badge = document.getElementById("feedBadge");
+      const status = headline?.feed_status || "unknown";
+      badge.textContent = status === "stale" ? "Feed: batch (stale)" : `Feed: ${status}`;
+      badge.className = "pill " + (status === "fresh" ? "ok" : status === "stale" ? "warn" : "");
+    }
+
+    async function loadReviewerChecklist() {
+      try {
+        const res = await fetch("/reviewer", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        renderReviewerChecklist(await res.json());
+      } catch (err) {
+        const score = document.getElementById("reviewerScore");
+        if (score) score.textContent = `Reviewer proof unavailable (${err.message}) — retrying…`;
+      }
+    }
+
+    function renderPosInsights(pos) {
+      const card = document.getElementById("posInsightsCard");
+      if (!pos || !pos.purchase_count) {
+        card.style.display = "none";
+        return;
+      }
+      card.style.display = "block";
+      document.getElementById("posInsightsGrid").innerHTML = [
+        ["Source file", pos.source_file],
+        ["Linked to CCTV", pos.linked_purchases],
+        ["Avg basket", pos.average_basket_value != null ? "₹" + pos.average_basket_value.toLocaleString() : NO_DATA],
+      ].map(([label, value]) => `<div class="evidence-item"><div class="label">${label}</div><div class="value">${value}</div></div>`).join("");
+      const brandList = (pos.top_brands || []).map(b =>
+        `<div style="display:flex;justify-content:space-between;font-size:0.8rem;padding:0.25rem 0"><span>${b.name}</span><span>₹${b.revenue.toLocaleString()}</span></div>`
+      ).join("") || `<p style="color:var(--muted);font-size:0.8rem">${NO_DATA}</p>`;
+      const catList = (pos.top_categories || []).map(c =>
+        `<div style="display:flex;justify-content:space-between;font-size:0.8rem;padding:0.25rem 0"><span>${c.name}</span><span>₹${c.revenue.toLocaleString()}</span></div>`
+      ).join("") || `<p style="color:var(--muted);font-size:0.8rem">${NO_DATA}</p>`;
+      document.getElementById("topBrandsList").innerHTML = brandList;
+      document.getElementById("topCategoriesList").innerHTML = catList;
+    }
+
+    function renderEvidence(evidence) {
+      const e = evidence || {};
+      const fmt = (v) => (v == null || v === "" || v === 0 && v !== "0") ? NO_DATA : v;
+      const videos = (e.source_videos || []).map(shortVideoName).filter(Boolean);
+      const videoTxt = videos.length ? videos.join(", ") : NO_DATA;
+      const lastIngest = e.last_ingestion_at ? new Date(e.last_ingestion_at).toLocaleString() : NO_DATA;
+      document.getElementById("evidenceGrid").innerHTML = [
+        ["CCTV cameras", videos.length ? `${videos.length}/5` : NO_DATA],
+        ["Frames analyzed", e.frames_analyzed > 0 ? e.frames_analyzed : NO_DATA],
+        ["Events generated", e.events_generated > 0 ? e.events_generated : NO_DATA],
+        ["Last ingestion", lastIngest],
+        ["Detector mode", e.detector_mode || NO_DATA],
+      ].map(([label, value]) => `<div class="evidence-item"><div class="label">${label}</div><div class="value">${value}</div></div>`).join("") +
+        `<div class="evidence-item" style="grid-column:1/-1"><div class="label">Source videos</div><div class="value" style="font-size:0.85rem">${videoTxt}</div></div>`;
+      document.getElementById("detectionEvidence").textContent = e.detection_evidence || NO_DATA;
+    }
+
+    async function apiGet(path) {
+      const apiKey = document.getElementById("apiKey").value.trim();
+      const headers = apiKey ? { "X-API-Key": apiKey } : {};
+      const res = await fetch(path, { headers });
+      if (!res.ok) {
+        const detail = await res.text().catch(() => "");
+        throw new Error(`${path} → HTTP ${res.status}${detail ? ": " + detail.slice(0, 100) : ""}`);
+      }
+      return res.json();
+    }
+
+    async function refresh() {
+      const storeId = document.getElementById("storeId").value.trim();
+      const liveBadge = document.getElementById("liveBadge");
+      const statusEl = document.getElementById("connection");
+      if (!storeId) {
+        liveBadge.className = "pill warn";
+        liveBadge.textContent = "Store ID required";
+        statusEl.textContent = "Enter a store UUID to load PostgreSQL metrics";
+        return;
+      }
+
+      liveBadge.className = "pill warn";
+      liveBadge.textContent = "Refreshing…";
+      statusEl.textContent = "Fetching from PostgreSQL…";
+
+      try {
+        const base = `/api/v1/stores/${storeId}`;
+        const summary = await apiGet(`${base}/dashboard/summary`);
+        periodQuery = `from=${encodeURIComponent(summary.period_start)}&to=${encodeURIComponent(summary.period_end)}`;
+        const q = periodQuery;
+
+        const [funnel, heatmap, visitorMetrics, footfallMetrics, queueMetrics, revenueMetrics, purchaseMetrics, anomalies] = await Promise.all([
+          apiGet(`${base}/funnel?${q}`).catch(e => ({ stages: [], unique_visitors: 0, _err: e.message })),
+          apiGet(`${base}/heatmap?${q}`).catch(e => ({ zones: [], meta: { message: e.message } })),
+          apiGet(`${base}/metrics?${q}&metric=visitor.count`).catch(e => ({ series: [], meta: { message: e.message } })),
+          apiGet(`${base}/metrics?${q}&metric=footfall.count`).catch(e => ({ series: [], meta: { message: e.message } })),
+          apiGet(`${base}/metrics?${q}&metric=queue.count`).catch(e => ({ series: [], meta: { message: e.message } })),
+          apiGet(`${base}/metrics?${q}&metric=pos.revenue`).catch(() => ({ series: [] })),
+          apiGet(`${base}/metrics?${q}&metric=pos.purchases`).catch(() => ({ series: [] })),
+          apiGet(`${base}/anomalies?${q}`).catch(() => ({ items: [] })),
+        ]);
+
+        const hasData = !summary.meta?.partial;
+        refreshIntervalSec = summary.refresh_interval_seconds || 5;
+
+        document.getElementById("partialBanner").innerHTML = summary.meta?.partial
+          ? `<div class="banner">${summary.meta.message || NO_DATA}</div>` : "";
+
+        if (summary.reviewer_headline?.feed_note) {
+          document.getElementById("partialBanner").innerHTML +=
+            `<div class="banner info">${summary.reviewer_headline.feed_note}</div>`;
+        }
+
+        const ps = new Date(summary.period_start).toLocaleDateString();
+        const pe = new Date(summary.period_end).toLocaleDateString();
+        document.getElementById("kpiPeriod").textContent = `${ps} – ${pe} · full ingested window (not rolling 24h)`;
+
+        renderHeadline(summary.reviewer_headline, hasData);
+        renderFeedBadge(summary.reviewer_headline);
+        renderKpis(summary.kpis, hasData);
+        renderPosInsights(summary.pos_insights);
+        renderFunnel(funnel);
+        renderHeatmap(heatmap);
+        updateTrendChart(visitorChart, document.getElementById("visitorEmpty"), visitorMetrics);
+        updateTrendChart(revenueChart, document.getElementById("revenueEmpty"), revenueMetrics);
+        updateTrendChart(purchaseChart, document.getElementById("purchaseEmpty"), purchaseMetrics);
+        updateTrendChart(footfallChart, document.getElementById("footfallEmpty"), footfallMetrics);
+        updateTrendChart(queueChart, document.getElementById("queueEmpty"), queueMetrics);
+        renderAnomalies(anomalies);
+        renderEvidence(summary.reviewer_evidence);
+
+        liveBadge.className = "pill ok";
+        liveBadge.textContent = `Live · ${refreshIntervalSec}s · ${new Date(summary.last_refreshed_at).toLocaleTimeString()}`;
+        statusEl.textContent = hasData ? "Connected · PostgreSQL pipeline data" : NO_DATA;
+      } catch (err) {
+        liveBadge.className = "pill err";
+        liveBadge.textContent = "Offline";
+        statusEl.textContent = err.message;
+        document.getElementById("kpiGrid").innerHTML = `<div class="kpi empty"><div class="kpi-label">Error</div><div class="kpi-value">${err.message}</div></div>`;
+      }
+    }
+
+    document.getElementById("refreshBtn").addEventListener("click", refresh);
+    document.getElementById("toggleControls").addEventListener("click", () => {
+      document.getElementById("controlsPanel").classList.toggle("open");
+    });
+    document.querySelectorAll(".nav a[data-nav]").forEach(link => {
+      link.addEventListener("click", () => {
+        document.querySelectorAll(".nav a").forEach(a => a.classList.remove("active"));
+        link.classList.add("active");
+      });
+    });
+
+    initCharts();
+    if (typeof lucide !== "undefined") lucide.createIcons();
+    renderApiLinkList();
+    verifyApiLinks();
+    loadReviewerChecklist();
+    refresh();
+    setInterval(refresh, 5000);
+    setInterval(loadReviewerChecklist, 30000);
+  </script>
+</body>
+</html>

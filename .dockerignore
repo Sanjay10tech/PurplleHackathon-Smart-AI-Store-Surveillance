@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Git / IDE
+.git/
+.gitignore
+.idea/
+.vscode/
+
+# Local env (compose injects env vars)
+.env
+.env.local
+
+# Docs and tests (not needed in runtime image)
+docs/
+tests/
+*.md
+!README.md
+
+# Data / models
+data/
+!data/reviewer/
+!data/reviewer/**
+!data/pos/
+!data/pos/**
+*.pt
+*.onnx
+*.engine
+
+# Docker state
+postgres_data/
+redis_data/
+minio_data/

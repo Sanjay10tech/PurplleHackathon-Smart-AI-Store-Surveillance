@@ -1,0 +1,193 @@
+# Purplle Brigade Road (ST1008) — floor plan derived from Brigade_Road_Layout.xlsx
+# Source: architectural plan + brand bay labels (Current revision, May 2026)
+# Store UUID: 00000000-0000-0000-0000-000000000101
+
+store_id: "00000000-0000-0000-0000-000000000101"
+store_code: ST1008
+store_name: Brigade_Bangalore
+layout_version: current
+source_file: Brigade_Road_Layout.xlsx
+
+sections:
+  entrance: { label: Entrance, color: "#94a3b8" }
+  foh: { label: Front of House, color: "#64748b" }
+  skincare: { label: Skincare Wall (North), color: "#86efac" }
+  cosmetics: { label: Cosmetics Wall (South), color: "#fdba74" }
+  promo: { label: Promo Islands, color: "#c4b5fd" }
+  service: { label: Consultation & Services, color: "#93c5fd" }
+  checkout: { label: Cash Counter & Queue, color: "#fca5a5" }
+  impulse: { label: Impulse & Accessories, color: "#67e8f9" }
+  hair: { label: Haircare, color: "#fde047" }
+  back_of_house: { label: Back of House, color: "#a8a29e" }
+
+# Physical layout zones on the Brigade Road floor plan
+layout_zones:
+  - id: entrance
+    label: Store Entrance
+    section: entrance
+    plan_position: west
+    plan_bbox: { x: 0.02, y: 0.35, w: 0.12, h: 0.30 }
+    description: Glass entry door and entry threshold line (CAM 3)
+
+  - id: foh_circulation
+    label: Front of House (F.O.H.)
+    section: foh
+    plan_position: center
+    plan_bbox: { x: 0.18, y: 0.35, w: 0.55, h: 0.45 }
+    description: Main circulation aisle between brand walls and islands
+
+  - id: skincare_wall
+    label: Skincare Brand Wall
+    section: skincare
+    plan_position: north
+    plan_bbox: { x: 0.52, y: 0.02, w: 0.46, h: 0.18 }
+    description: North perimeter skincare gondolas (CAM 1) — EB, TFS, GV, DermDoc, Pilgrim, Minimalist, Aqualogica
+
+  - id: cosmetics_wall
+    label: Cosmetics Brand Wall
+    section: cosmetics
+    plan_position: south
+    plan_bbox: { x: 0.52, y: 0.72, w: 0.46, h: 0.18 }
+    description: South perimeter cosmetics gondolas (CAM 2) — Maybelline, Lakme, Faces, Swiss+Renee, Mars+Nybae, Alps, L'Oreal
+
+  - id: promo_island_central
+    label: Promo Island - Beat the Heat
+    section: promo
+    plan_position: center_north
+    plan_bbox: { x: 0.30, y: 0.28, w: 0.18, h: 0.12 }
+    description: Central promo gondola on main floor (CAM 1)
+
+  - id: promo_island_south
+    label: Promo Island - Summer Essentials
+    section: promo
+    plan_position: center_south
+    plan_bbox: { x: 0.30, y: 0.55, w: 0.18, h: 0.12 }
+    description: Secondary promo island (CAM 2)
+
+  - id: consultation_skincare
+    label: Skincare Consultation Desk
+    section: service
+    plan_position: east_north
+    plan_bbox: { x: 0.78, y: 0.22, w: 0.12, h: 0.10 }
+    description: Consultation counter on skincare side (CAM 1)
+
+  - id: consultation_makeup
+    label: Makeup Consultation Station
+    section: service
+    plan_position: west_center
+    plan_bbox: { x: 0.22, y: 0.42, w: 0.10, h: 0.10 }
+    description: Makeup trial / consultation (CAM 2)
+
+  - id: makeup_trial_units
+    label: Makeup Trial Units
+    section: service
+    plan_position: center
+    description: Twin MAKEUP UNIT stations on floor plan
+
+  - id: fragrance_nails
+    label: Fragrance & Nail Gondola
+    section: impulse
+    plan_position: west_center
+    description: Left island — fragrance, nail gondola, nail unit
+
+  - id: billing_queue
+    label: Billing Queue
+    section: checkout
+    plan_position: east
+    plan_bbox: { x: 0.88, y: 0.38, w: 0.08, h: 0.22 }
+    description: Customer queue lane before cash counter (CAM 5)
+
+  - id: cash_counter
+    label: Cash Counter
+    section: checkout
+    plan_position: east
+    plan_bbox: { x: 0.90, y: 0.28, w: 0.08, h: 0.12 }
+    description: Active POS checkout desks (CAM 5)
+
+  - id: accessories_wall
+    label: Accessories Wall
+    section: impulse
+    plan_position: far_east
+    description: Vertical accessories bay on east wall
+
+  - id: pmu_station
+    label: PMU Station
+    section: service
+    plan_position: southeast
+    description: Permanent makeup service nook
+
+  - id: mens_care
+    label: Men's Care
+    section: skincare
+    plan_position: south_mid
+    description: Men's grooming bay (Current layout revision)
+
+  - id: haircare_bay
+    label: Haircare Bay (Alps / L'Oreal)
+    section: hair
+    plan_position: southeast_wall
+    description: Haircare gondola — Alps Goodness, Streax/L'Oreal area
+
+  - id: stockroom
+    label: Stockroom
+    section: back_of_house
+    plan_position: back
+    plan_bbox: { x: 0.88, y: 0.02, w: 0.10, h: 0.18 }
+    description: Staff stock floor (CAM 4)
+
+# Brand bays on the Current floor plan (for POS / planogram cross-reference)
+brand_bays:
+  north_wall:
+    - { id: bay_eb_korean, label: EB Korean, brands: [EB Korean] }
+    - { id: bay_tfs, label: The Face Shop, brands: [TFS, The Face Shop] }
+    - { id: bay_good_vibes, label: Good Vibes, brands: [Good Vibes, GV] }
+    - { id: bay_dermdoc, label: DermDoc, brands: [DERMDOC, DermDoc] }
+    - { id: bay_minimalist, label: Minimalist, brands: [Minimalist] }
+    - { id: bay_aqualogica, label: Aqualogica, brands: [Aqualogica] }
+    - { id: bay_pilgrim, label: Pilgrim, brands: [Pilgrim] }
+  south_wall:
+    - { id: bay_maybelline, label: Maybelline, brands: [Maybelline] }
+    - { id: bay_faces_canada, label: Faces Canada, brands: [Faces Canada, Faces] }
+    - { id: bay_lakme, label: Lakme, brands: [Lakme] }
+    - { id: bay_swiss_renee, label: Swiss Beauty + Renee, brands: [Swiss Beauty, Renee] }
+    - { id: bay_mars_nybae, label: Mars + NY Bae, brands: [MARS, NY Bae] }
+    - { id: bay_alps_goodness, label: Alps Goodness, brands: [Alps Goodness] }
+    - { id: bay_loreal, label: "L'Oreal / Streax", brands: ["L'Oreal", Streax] }
+    - { id: bay_beauty_essentials, label: Beauty Essentials, brands: [Beauty Essentials] }
+
+# Maps pipeline / camera zone_id (or zone_type fallback) → layout zone
+camera_zone_mapping:
+  zone-cam3-entry-threshold: entrance
+  zone-cam3-entry-landing: entrance
+  zone-cam1-aisle: foh_circulation
+  zone-cam1-aisle-entry-line: foh_circulation
+  zone-cam2-aisle: foh_circulation
+  zone-cam2-left-mouth: foh_circulation
+  zone-cam1-browse-left: skincare_wall
+  zone-cam2-browse: cosmetics_wall
+  zone-cam1-promo: promo_island_central
+  zone-cam2-promo: promo_island_south
+  zone-cam1-consultation: consultation_skincare
+  zone-cam2-consultation: consultation_makeup
+  zone-cam5-queue: billing_queue
+  zone-cam5-queue-entry: billing_queue
+  zone-cam5-checkout: cash_counter
+  zone-cam5-staff: cash_counter
+  zone-cam4-stock: stockroom
+  zone-cam4-door: stockroom
+
+# Fallback when events only carry zone_type (no zone_id)
+zone_type_mapping:
+  entry_threshold: entrance
+  entrance: entrance
+  aisle: foh_circulation
+  browse: foh_circulation
+  browse_skincare: skincare_wall
+  browse_cosmetics: cosmetics_wall
+  promo_island: promo_island_central
+  consultation: consultation_skincare
+  billing_queue: billing_queue
+  checkout: cash_counter
+  display: accessories_wall
+  staff_only: stockroom
+  ignore: null

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Docker
+postgres_data/
+redis_data/
+minio_data/
+
+# Dataset — raw CCTV not committed (~680 MB); see data/videos/README.md
+data/*
+!data/videos/
+!data/videos/README.md
+!data/videos/.gitkeep
+!data/samples/
+!data/samples/**
+!data/reviewer/
+!data/reviewer/**
+!data/pos/
+!data/pos/**
+data/videos/*.mp4
+data/videos/*.MP4
+data/pipeline/
+data/analysis_frames/
+data/*.json
+tests/fixtures/real/
+
+# Models
+*.pt
+*.onnx
+*.engine
+
+# OS
+.DS_Store
+Thumbs.db

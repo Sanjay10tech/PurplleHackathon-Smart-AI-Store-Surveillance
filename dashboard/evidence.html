@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluation Evidence — Store Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050508; --glass: rgba(255,255,255,0.06); --border: rgba(255,255,255,0.1);
+      --text: #fafafa; --muted: #9ca3af; --purple: #a855f7; --success: #34d399;
+      --radius: 16px; --blur: blur(22px);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    .ambient { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse 70% 50% at 20% -10%, rgba(124,58,237,0.25), transparent 55%); }
+    .wrap { position: relative; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    header { margin-bottom: 2rem; }
+    h1 { margin: 0 0 0.5rem; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; }
+    .sub { color: var(--muted); font-size: 0.9rem; }
+    .nav-link { color: var(--purple); text-decoration: none; font-weight: 600; font-size: 0.85rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .card {
+      background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.25rem; backdrop-filter: var(--blur);
+    }
+    .card .label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-weight: 600; }
+    .card .value { font-size: 2rem; font-weight: 800; margin-top: 0.35rem; letter-spacing: -0.03em; }
+    .card .src { font-size: 0.65rem; color: #6b7280; margin-top: 0.4rem; }
+    section { margin-top: 2.5rem; }
+    h2 { font-size: 1.1rem; margin: 0 0 1rem; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .shot { overflow: hidden; border-radius: 12px; border: 1px solid var(--border); background: var(--glass); }
+    .shot img { width: 100%; display: block; aspect-ratio: 16/10; object-fit: cover; background: #111; }
+    .shot figcaption { padding: 0.75rem; font-size: 0.78rem; color: var(--muted); }
+    .log {
+      background: #0a0a12; border: 1px solid var(--border); border-radius: 12px;
+      padding: 1rem; font-family: ui-monospace, monospace; font-size: 0.72rem;
+      color: #a1a1aa; max-height: 420px; overflow: auto; white-space: pre-wrap;
+    }
+    .badge { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 999px; background: rgba(168,85,247,0.15); color: var(--purple); font-size: 0.72rem; font-weight: 600; }
+    .loading { color: var(--muted); padding: 2rem; text-align: center; }
+    .api-key-box {
+      background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.25);
+      border-radius: 12px; padding: 1rem 1.15rem; margin-bottom: 1rem; font-size: 0.82rem;
+    }
+    .api-link-list { display: grid; gap: 0.45rem; }
+    .api-link-row {
+      display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;
+      font-size: 0.78rem; font-family: ui-monospace, monospace;
+    }
+    .api-link-row button {
+      background: none; border: none; color: var(--purple); cursor: pointer;
+      text-align: left; padding: 0; font: inherit; text-decoration: underline;
+    }
+    .api-status { font-size: 0.68rem; font-weight: 700; min-width: 2.5rem; }
+    .api-status.ok { color: var(--success); }
+    .api-status.err { color: #f87171; }
+  </style>
+</head>
+<body>
+  <div class="ambient"></div>
+  <div class="wrap">
+    <header>
+      <a class="nav-link" href="index.html">← Live Dashboard</a>
+      <h1>Purple Tech — Evaluation Evidence</h1>
+      <p class="sub" id="subtitle">Real processed CCTV pipeline data · loading…</p>
+    </header>
+
+    <div class="grid" id="metricGrid"><div class="loading">Loading evidence…</div></div>
+
+    <section>
+      <h2>Per-video processing (YOLOv11n real)</h2>
+      <div class="card" style="padding:0; overflow:hidden">
+        <table id="videoTable"><tbody><tr><td>Loading…</td></tr></tbody></table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Detection screenshots</h2>
+      <p class="sub">Annotated frames from <code>scripts/generate_detection_evidence.py</code> and full YOLO validation.</p>
+      <div class="shots" id="screenshots"></div>
+    </section>
+
+    <section id="reviewer-api">
+      <h2>Reviewer API Quick-Start</h2>
+      <p class="sub">Demo credentials — protected routes require header <code>X-API-Key: purple-demo-key</code></p>
+      <div class="card">
+        <div class="api-key-box">
+          <strong>Demo credentials</strong><br />
+          Store ID: <code>00000000-0000-0000-0000-000000000101</code><br />
+          API Key: <code>purple-demo-key</code><br />
+          Public: <a class="nav-link" href="/health" target="_blank" rel="noopener">GET /health</a> ·
+          <a class="nav-link" href="/reviewer" target="_blank" rel="noopener">GET /reviewer</a> ·
+          <a class="nav-link" href="/docs" target="_blank" rel="noopener">OpenAPI /docs</a>
+        </div>
+        <div class="api-link-list" id="apiLinkList"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Round 2 evidence pack</h2>
+      <p class="sub">Committed reviewer documents — no mock data in BI metrics; Re-ID uses documented mock-embedding mode on real MP4s.</p>
+      <table>
+        <thead><tr><th>Pillar</th><th>Document</th></tr></thead>
+        <tbody>
+          <tr><td>Re-ID</td><td><code>REID_EVIDENCE.md</code> · <a class="nav-link" href="#reviewer-api">GET /reid/evidence</a></td></tr>
+          <tr><td>Real YOLO</td><td><code>REAL_PIPELINE_EVIDENCE.md</code></td></tr>
+          <tr><td>Doc consistency</td><td><code>DOC_CONSISTENCY_REPORT.md</code></td></tr>
+          <tr><td>Business funnel</td><td><code>BUSINESS_STORY_REPORT.md</code> · <a class="nav-link" href="index.html#business-story">Dashboard</a></td></tr>
+          <tr><td>CI / Docker</td><td><code>CI_EVIDENCE.md</code></td></tr>
+          <tr><td>95+ checklist</td><td><code>95_PLUS_CHECKLIST.md</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="log" id="logPanel">Loading…</div>
+    </section>
+  </div>
+
+  <script>
+    const DEMO_STORE_ID = "00000000-0000-0000-0000-000000000101";
+    const DEMO_API_KEY = "purple-demo-key";
+    const REVIEWER_API_ROUTES = [
+      { label: "Metrics", path: `/api/v1/stores/${DEMO_STORE_ID}/metrics?metric=visitor.count` },
+      { label: "Funnel", path: `/api/v1/stores/${DEMO_STORE_ID}/funnel` },
+      { label: "Heatmap", path: `/api/v1/stores/${DEMO_STORE_ID}/heatmap` },
+      { label: "Anomalies", path: `/api/v1/stores/${DEMO_STORE_ID}/anomalies` },
+      { label: "Dashboard summary", path: `/api/v1/stores/${DEMO_STORE_ID}/dashboard/summary` },
+      { label: "Retail journeys", path: `/api/v1/stores/${DEMO_STORE_ID}/funnel/journeys` },
+      { label: "Re-ID evidence", path: `/api/v1/stores/${DEMO_STORE_ID}/reid/evidence` },
+    ];
+
+    async function openApiJson(path) {
+      const res = await fetch(path, { headers: { "X-API-Key": DEMO_API_KEY } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const blob = new Blob([JSON.stringify(await res.json(), null, 2)], { type: "application/json" });
+      window.open(URL.createObjectURL(blob), "_blank", "noopener");
+    }
+
+    function renderApiLinkList() {
+      const list = document.getElementById("apiLinkList");
+      if (!list) return;
+      list.innerHTML = [
+        { label: "Health", path: "/health", public: true },
+        { label: "Reviewer", path: "/reviewer", public: true },
+        ...REVIEWER_API_ROUTES,
+      ].map(r => `
+        <div class="api-link-row" data-path="${r.path}" data-public="${r.public ? "1" : "0"}">
+          <span class="api-status">…</span>
+          <strong style="font-size:0.72rem;min-width:6rem">${r.label}</strong>
+          <button type="button" class="api-open" data-path="${r.path}" data-public="${r.public ? "1" : "0"}">${r.path}</button>
+        </div>`).join("");
+      list.querySelectorAll(".api-open").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const path = btn.getAttribute("data-path");
+          const isPublic = btn.getAttribute("data-public") === "1";
+          try {
+            if (isPublic) window.open(path, "_blank", "noopener");
+            else await openApiJson(path);
+          } catch (err) {
+            alert(err.message);
+          }
+        });
+      });
+    }
+
+    async function verifyApiLinks() {
+      const rows = document.querySelectorAll(".api-link-row");
+      for (const row of rows) {
+        const path = row.getAttribute("data-path");
+        const isPublic = row.getAttribute("data-public") === "1";
+        const statusEl = row.querySelector(".api-status");
+        try {
+          const headers = isPublic ? {} : { "X-API-Key": DEMO_API_KEY };
+          const res = await fetch(path, { headers });
+          statusEl.textContent = res.status;
+          statusEl.className = "api-status " + (res.ok ? "ok" : "err");
+        } catch {
+          statusEl.textContent = "ERR";
+          statusEl.className = "api-status err";
+        }
+      }
+    }
+
+    const METRICS = [
+      { key: "videos_processed", label: "Videos Processed", section: "detection_pipeline" },
+      { key: "total_frames_analyzed", label: "Frames Analyzed", section: "detection_pipeline", fmt: n => n.toLocaleString() },
+      { key: "people_detected", label: "People Detected", section: "detection_pipeline", fmt: n => n.toLocaleString() },
+      { key: "entries", label: "Entries", section: "ingested_intelligence" },
+      { key: "exits", label: "Exits", section: "ingested_intelligence" },
+      { key: "re_entries", label: "Re-Entries", section: "ingested_intelligence" },
+      { key: "staff_filtered", label: "Staff Filtered", section: "ingested_intelligence" },
+      { key: "zone_visits", label: "Zone Visits", section: "ingested_intelligence" },
+      { key: "queue_events", label: "Queue Events", section: "ingested_intelligence" },
+      { key: "purchases", label: "Purchases", section: "ingested_intelligence" },
+      { key: "anomalies", label: "Anomalies", section: "ingested_intelligence" },
+    ];
+
+    const SOURCES = {
+      videos_processed: "YOLO validation — 5 CCTV MP4s",
+      total_frames_analyzed: "Sampled @ 5 FPS",
+      people_detected: "Track-frame YOLO detections",
+      entries: "DB: is_store_entry",
+      exits: "DB: is_store_exit",
+      re_entries: "DB + funnel re_entry",
+      staff_filtered: "Staff events excluded",
+      zone_visits: "DB: zone.entered (customer)",
+      queue_events: "DB: billing zones",
+      purchases: "DB: transactions",
+      anomalies: "Anomaly engine",
+    };
+
+    async function loadEvidence() {
+      const res = await fetch("/evidence-assets/evaluation_evidence.json");
+      if (!res.ok) throw new Error("evaluation_evidence.json not found — run generate_evaluation_evidence.py");
+      return res.json();
+    }
+
+    function renderMetrics(data) {
+      const grid = document.getElementById("metricGrid");
+      grid.innerHTML = METRICS.map(m => {
+        const section = data[m.section] || {};
+        const raw = section[m.key] ?? 0;
+        const val = m.fmt ? m.fmt(raw) : String(raw);
+        return `<article class="card">
+          <div class="label">${m.label}</div>
+          <div class="value">${val}</div>
+          <div class="src">${SOURCES[m.key] || ""}</div>
+        </article>`;
+      }).join("");
+
+      document.getElementById("subtitle").textContent =
+        `Generated ${new Date(data.generated_at).toLocaleString()} · Store ${data.store_id} · ${data.data_policy}`;
+
+      const videos = data.detection_pipeline?.per_video || [];
+      document.getElementById("videoTable").innerHTML = `
+        <thead><tr><th>Video</th><th>Frames</th><th>People</th><th>Entries</th><th>Zone enters</th><th>Staff</th></tr></thead>
+        <tbody>${videos.map(v => `<tr>
+          <td>${v.video_file || v.camera_name}</td>
+          <td>${v.frames_processed}</td>
+          <td>${v.people_detected}</td>
+          <td>${v.entry_events}</td>
+          <td>${v.zone_enter_events}</td>
+          <td>${v.staff_tracks_classified}</td>
+        </tr>`).join("")}</tbody>`;
+
+      document.getElementById("screenshots").innerHTML = (data.screenshots || []).map(s => `
+        <figure class="shot">
+          <img src="/evidence-assets/${s.file}" alt="${s.caption}" loading="lazy" />
+          <figcaption><span class="badge">${s.camera}</span> ${s.caption}</figcaption>
+        </figure>`).join("");
+
+      document.getElementById("logPanel").textContent = data.log_excerpt || "(no log captured)";
+    }
+
+    renderApiLinkList();
+    verifyApiLinks();
+    loadEvidence().then(renderMetrics).catch(err => {
+      document.getElementById("metricGrid").innerHTML = `<div class="card" style="grid-column:1/-1;color:#f87171">${err.message}</div>`;
+    });
+  </script>
+</body>
+</html>

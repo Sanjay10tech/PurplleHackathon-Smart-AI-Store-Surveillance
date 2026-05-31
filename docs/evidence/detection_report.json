@@ -1,0 +1,108 @@
+{
+  "generated_at": "2026-05-30T08:57:59.134006+00:00",
+  "detector_model": "yolo11n.pt",
+  "mode": "yolo_real_no_mock",
+  "cameras": [
+    {
+      "camera": "CAM 3",
+      "video": "data\\videos\\CAM 3.mp4",
+      "frames_sampled": 20,
+      "detections_total": 27,
+      "avg_confidence": 0.522,
+      "annotated_frames": [
+        "docs\\evidence\\annotated\\CAM_3_frame_000.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_001.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_002.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_003.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_004.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_005.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_006.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_007.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_008.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_009.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_010.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_011.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_012.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_013.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_014.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_015.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_016.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_017.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_018.jpg",
+        "docs\\evidence\\annotated\\CAM_3_frame_019.jpg"
+      ],
+      "tracking_screenshot": "docs\\evidence\\tracking\\CAM_3_tracking.jpg"
+    },
+    {
+      "camera": "CAM 1",
+      "video": "data\\videos\\CAM 1.mp4",
+      "frames_sampled": 20,
+      "detections_total": 41,
+      "avg_confidence": 0.821,
+      "annotated_frames": [
+        "docs\\evidence\\annotated\\CAM_1_frame_000.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_001.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_002.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_003.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_004.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_005.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_006.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_007.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_008.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_009.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_010.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_011.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_012.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_013.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_014.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_015.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_016.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_017.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_018.jpg",
+        "docs\\evidence\\annotated\\CAM_1_frame_019.jpg"
+      ],
+      "tracking_screenshot": "docs\\evidence\\tracking\\CAM_1_tracking.jpg"
+    },
+    {
+      "camera": "CAM 5",
+      "video": "data\\videos\\CAM 5.mp4",
+      "frames_sampled": 20,
+      "detections_total": 14,
+      "avg_confidence": 0.75,
+      "annotated_frames": [
+        "docs\\evidence\\annotated\\CAM_5_frame_000.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_001.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_002.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_003.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_004.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_005.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_006.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_007.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_008.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_009.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_010.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_011.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_012.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_013.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_014.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_015.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_016.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_017.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_018.jpg",
+        "docs\\evidence\\annotated\\CAM_5_frame_019.jpg"
+      ],
+      "tracking_screenshot": "docs\\evidence\\tracking\\CAM_5_tracking.jpg"
+    }
+  ],
+  "pipeline_samples": {
+    "exit_code": 0,
+    "sample_count": 4,
+    "output": "docs\\evidence\\sample_events.json",
+    "stdout_tail": [
+      "  sessions_path: data\\pipeline\\sessions.jsonl",
+      "  event_count: 3",
+      "  session_count: 0"
+    ]
+  },
+  "limitations": "YOLOv11n detects COCO `person` class only; crowded scenes may merge boxes. ByteTrack ID switches under occlusion are mitigated by session rules but not eliminated. Staff uniform heuristic is rule-based, not trained. Zone lines require manual calibration per store."
+}

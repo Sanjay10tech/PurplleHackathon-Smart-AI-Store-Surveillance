@@ -1,0 +1,664 @@
+{
+  "generated_at": "2026-05-30T16:07:02.648013+00:00",
+  "excel_labels": [
+    {
+      "text": "Maybelline",
+      "plan_x": 0.1415,
+      "plan_y": 0.8847,
+      "revision": "revised"
+    },
+    {
+      "text": "Lakme",
+      "plan_x": 0.3404,
+      "plan_y": 0.8824,
+      "revision": "revised"
+    },
+    {
+      "text": "Faces",
+      "plan_x": 0.2425,
+      "plan_y": 0.8736,
+      "revision": "revised"
+    },
+    {
+      "text": "Mars+",
+      "plan_x": 0.4361,
+      "plan_y": 0.8536,
+      "revision": "revised"
+    },
+    {
+      "text": "Alps Goodness",
+      "plan_x": 0.6276,
+      "plan_y": 0.8758,
+      "revision": "current"
+    },
+    {
+      "text": "Lo'real",
+      "plan_x": 0.7202,
+      "plan_y": 0.8736,
+      "revision": "current"
+    },
+    {
+      "text": "Beauty",
+      "plan_x": 0.8074,
+      "plan_y": 0.8625,
+      "revision": "current"
+    },
+    {
+      "text": "Accessories",
+      "plan_x": 0.9248,
+      "plan_y": 0.6844,
+      "revision": "current"
+    },
+    {
+      "text": "JC",
+      "plan_x": 0.7968,
+      "plan_y": 0.0776,
+      "revision": "current"
+    },
+    {
+      "text": "Aqualogica",
+      "plan_x": 0.601,
+      "plan_y": 0.0776,
+      "revision": "current"
+    },
+    {
+      "text": "TFS",
+      "plan_x": 0.2117,
+      "plan_y": 0.0665,
+      "revision": "revised"
+    },
+    {
+      "text": "Salm",
+      "plan_x": 0.1223,
+      "plan_y": 0.0687,
+      "revision": "revised"
+    },
+    {
+      "text": "GV",
+      "plan_x": 0.3127,
+      "plan_y": 0.0754,
+      "revision": "revised"
+    },
+    {
+      "text": "DermDoc",
+      "plan_x": 0.4032,
+      "plan_y": 0.0843,
+      "revision": "revised"
+    },
+    {
+      "text": "Foxtale",
+      "plan_x": 0.7,
+      "plan_y": 0.0754,
+      "revision": "current"
+    },
+    {
+      "text": "Minimalist",
+      "plan_x": 0.4968,
+      "plan_y": 0.0776,
+      "revision": "current"
+    },
+    {
+      "text": "Swiss + Renee",
+      "plan_x": 0.4351,
+      "plan_y": 2.0797,
+      "revision": "revised"
+    },
+    {
+      "text": "D&K",
+      "plan_x": 0.7968,
+      "plan_y": 1.2993,
+      "revision": "current"
+    },
+    {
+      "text": "EB",
+      "plan_x": 0.1223,
+      "plan_y": 1.2904,
+      "revision": "revised"
+    },
+    {
+      "text": "Pilgrim",
+      "plan_x": 0.7,
+      "plan_y": 1.2971,
+      "revision": "current"
+    },
+    {
+      "text": "Mens",
+      "plan_x": 0.5255,
+      "plan_y": 0.8603,
+      "revision": "current"
+    }
+  ],
+  "excel_meta": {
+    "image_extracted": "docs\\evidence\\brigade_road_layout.png",
+    "image_anchor_emu": {
+      "x": 1828800,
+      "y": 552450,
+      "w": 5969307,
+      "h": 2863997
+    }
+  },
+  "camera_zones": [
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "zone_id": "zone-cam1-aisle",
+      "generic_name": "foh_circulation",
+      "store_name": "Front of House (F.O.H.)",
+      "zone_type": "aisle",
+      "layout_zone_id": "foh_circulation",
+      "layout_label": "Front of House (F.O.H.)",
+      "points": [
+        [
+          0.05,
+          0.4
+        ],
+        [
+          0.95,
+          0.4
+        ],
+        [
+          0.95,
+          0.95
+        ],
+        [
+          0.05,
+          0.95
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "zone_id": "zone-cam1-promo",
+      "generic_name": "promo_island_central",
+      "store_name": "Promo Island - Beat the Heat",
+      "zone_type": "promo_island",
+      "layout_zone_id": "promo_island_central",
+      "layout_label": "Promo Island - Beat the Heat",
+      "points": [
+        [
+          0.35,
+          0.62
+        ],
+        [
+          0.55,
+          0.62
+        ],
+        [
+          0.55,
+          0.88
+        ],
+        [
+          0.35,
+          0.88
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "zone_id": "zone-cam1-consultation",
+      "generic_name": "consultation_skincare",
+      "store_name": "Skincare Consultation Desk",
+      "zone_type": "consultation",
+      "layout_zone_id": "consultation_skincare",
+      "layout_label": "Skincare Consultation Desk",
+      "points": [
+        [
+          0.72,
+          0.55
+        ],
+        [
+          0.95,
+          0.55
+        ],
+        [
+          0.95,
+          0.85
+        ],
+        [
+          0.72,
+          0.85
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "zone_id": "zone-cam1-browse-left",
+      "generic_name": "skincare_wall",
+      "store_name": "Skincare Brand Wall",
+      "zone_type": "browse_skincare",
+      "layout_zone_id": "skincare_wall",
+      "layout_label": "Skincare Brand Wall",
+      "points": [
+        [
+          0.02,
+          0.08
+        ],
+        [
+          0.98,
+          0.08
+        ],
+        [
+          0.98,
+          0.35
+        ],
+        [
+          0.02,
+          0.35
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "zone_id": "zone-cam1-aisle-entry-line",
+      "generic_name": "foh_circulation_entry_line",
+      "store_name": "Front of House (F.O.H.)",
+      "zone_type": "aisle",
+      "layout_zone_id": "foh_circulation",
+      "layout_label": "Front of House (F.O.H.)",
+      "points": [
+        [
+          0.05,
+          0.9
+        ],
+        [
+          0.95,
+          0.9
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "zone_id": "zone-cam2-aisle",
+      "generic_name": "foh_circulation",
+      "store_name": "Front of House (F.O.H.)",
+      "zone_type": "aisle",
+      "layout_zone_id": "foh_circulation",
+      "layout_label": "Front of House (F.O.H.)",
+      "points": [
+        [
+          0.05,
+          0.35
+        ],
+        [
+          0.95,
+          0.35
+        ],
+        [
+          0.95,
+          0.95
+        ],
+        [
+          0.05,
+          0.95
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "zone_id": "zone-cam2-consultation",
+      "generic_name": "consultation_makeup",
+      "store_name": "Makeup Consultation Station",
+      "zone_type": "consultation",
+      "layout_zone_id": "consultation_makeup",
+      "layout_label": "Makeup Consultation Station",
+      "points": [
+        [
+          0.06,
+          0.45
+        ],
+        [
+          0.28,
+          0.45
+        ],
+        [
+          0.28,
+          0.75
+        ],
+        [
+          0.06,
+          0.75
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "zone_id": "zone-cam2-browse",
+      "generic_name": "cosmetics_wall",
+      "store_name": "Cosmetics Brand Wall",
+      "zone_type": "browse_cosmetics",
+      "layout_zone_id": "cosmetics_wall",
+      "layout_label": "Cosmetics Brand Wall",
+      "points": [
+        [
+          0.02,
+          0.05
+        ],
+        [
+          0.98,
+          0.05
+        ],
+        [
+          0.98,
+          0.32
+        ],
+        [
+          0.02,
+          0.32
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "zone_id": "zone-cam2-promo",
+      "generic_name": "promo_island_south",
+      "store_name": "Promo Island - Summer Essentials",
+      "zone_type": "promo_island",
+      "layout_zone_id": "promo_island_south",
+      "layout_label": "Promo Island - Summer Essentials",
+      "points": [
+        [
+          0.38,
+          0.68
+        ],
+        [
+          0.58,
+          0.68
+        ],
+        [
+          0.58,
+          0.92
+        ],
+        [
+          0.38,
+          0.92
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "zone_id": "zone-cam2-left-mouth",
+      "generic_name": "foh_circulation_left_mouth",
+      "store_name": "Front of House (F.O.H.)",
+      "zone_type": "aisle",
+      "layout_zone_id": "foh_circulation",
+      "layout_label": "Front of House (F.O.H.)",
+      "points": [
+        [
+          0.1,
+          0.3
+        ],
+        [
+          0.1,
+          0.8
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "camera_name": "CAM 3",
+      "zone_id": "zone-cam3-entry-threshold",
+      "generic_name": "entrance_threshold",
+      "store_name": "Store Entrance",
+      "zone_type": "entry_threshold",
+      "layout_zone_id": "entrance",
+      "layout_label": "Store Entrance",
+      "points": [
+        [
+          0.42,
+          0.33
+        ],
+        [
+          0.68,
+          0.48
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "camera_name": "CAM 3",
+      "zone_id": "zone-cam3-entry-landing",
+      "generic_name": "entrance_landing",
+      "store_name": "Store Entrance",
+      "zone_type": "entrance",
+      "layout_zone_id": "entrance",
+      "layout_label": "Store Entrance",
+      "points": [
+        [
+          0.05,
+          0.25
+        ],
+        [
+          0.55,
+          0.25
+        ],
+        [
+          0.55,
+          0.55
+        ],
+        [
+          0.05,
+          0.55
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "camera_name": "CAM 3",
+      "zone_id": "zone-cam3-occlusion",
+      "generic_name": "entrance_occlusion_mask",
+      "store_name": "Store Entrance",
+      "zone_type": "ignore",
+      "layout_zone_id": "entrance",
+      "layout_label": "Store Entrance",
+      "points": [
+        [
+          0.78,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.78,
+          1.0
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000204",
+      "camera_name": "CAM 4",
+      "zone_id": "zone-cam4-stock",
+      "generic_name": "stockroom",
+      "store_name": "Stockroom",
+      "zone_type": "staff_only",
+      "layout_zone_id": "stockroom",
+      "layout_label": "Stockroom",
+      "points": [
+        [
+          0.05,
+          0.15
+        ],
+        [
+          0.95,
+          0.15
+        ],
+        [
+          0.95,
+          0.95
+        ],
+        [
+          0.05,
+          0.95
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000204",
+      "camera_name": "CAM 4",
+      "zone_id": "zone-cam4-door",
+      "generic_name": "stockroom_door",
+      "store_name": "Stockroom",
+      "zone_type": "staff_only",
+      "layout_zone_id": "stockroom",
+      "layout_label": "Stockroom",
+      "points": [
+        [
+          0.35,
+          0.08
+        ],
+        [
+          0.55,
+          0.08
+        ]
+      ],
+      "in_db": false
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000205",
+      "camera_name": "CAM 5",
+      "zone_id": "zone-cam5-queue",
+      "generic_name": "billing_queue",
+      "store_name": "Billing Queue",
+      "zone_type": "billing_queue",
+      "layout_zone_id": "billing_queue",
+      "layout_label": "Billing Queue",
+      "points": [
+        [
+          0.05,
+          0.45
+        ],
+        [
+          0.35,
+          0.45
+        ],
+        [
+          0.35,
+          0.88
+        ],
+        [
+          0.05,
+          0.88
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000205",
+      "camera_name": "CAM 5",
+      "zone_id": "zone-cam5-checkout",
+      "generic_name": "cash_counter",
+      "store_name": "Cash Counter",
+      "zone_type": "checkout",
+      "layout_zone_id": "cash_counter",
+      "layout_label": "Cash Counter",
+      "points": [
+        [
+          0.3,
+          0.35
+        ],
+        [
+          0.62,
+          0.35
+        ],
+        [
+          0.62,
+          0.65
+        ],
+        [
+          0.3,
+          0.65
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000205",
+      "camera_name": "CAM 5",
+      "zone_id": "zone-cam5-staff",
+      "generic_name": "cash_counter_staff",
+      "store_name": "Cash Counter",
+      "zone_type": "staff_only",
+      "layout_zone_id": "cash_counter",
+      "layout_label": "Cash Counter",
+      "points": [
+        [
+          0.28,
+          0.3
+        ],
+        [
+          0.65,
+          0.3
+        ],
+        [
+          0.65,
+          0.55
+        ],
+        [
+          0.28,
+          0.55
+        ]
+      ],
+      "in_db": true
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000205",
+      "camera_name": "CAM 5",
+      "zone_id": "zone-cam5-queue-entry",
+      "generic_name": "billing_queue_entry_line",
+      "store_name": "Billing Queue",
+      "zone_type": "billing_queue",
+      "layout_zone_id": "billing_queue",
+      "layout_label": "Billing Queue",
+      "points": [
+        [
+          0.2,
+          0.45
+        ],
+        [
+          0.2,
+          0.88
+        ]
+      ],
+      "in_db": false
+    }
+  ],
+  "heatmap_meta": {
+    "partial": false,
+    "source": "heatmap_engine",
+    "data_confidence": "MEDIUM",
+    "total_visits": 134,
+    "zones_with_dwell": 6,
+    "message": null,
+    "layout_source": "Brigade_Road_Layout.xlsx",
+    "layout_version": "current",
+    "layout_mapped": true
+  }
+}

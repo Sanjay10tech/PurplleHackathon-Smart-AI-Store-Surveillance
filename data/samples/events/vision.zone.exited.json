@@ -1,0 +1,31 @@
+{
+  "event_id": "a5018c29-aede-4c6a-ae3d-0d546cf648bb",
+  "event_type": "vision.zone.exited",
+  "schema_version": "1.0.0",
+  "tenant_id": "00000000-0000-0000-0000-000000000001",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "occurred_at": "2026-05-31T15:29:08.503425Z",
+  "correlation_id": "sample-events",
+  "idempotency_key": "vision.zone.exited-00000000-0000-0000-0000-000000000101:c6ce6608-9bcf-40a0-bc5d-7956421925e8-zone-cam1-browse-left-1780241348503",
+  "aggregate": {
+    "type": "zone",
+    "id": "04a7fd9e-e0e4-508d-95a2-0dfebdcf2bdb"
+  },
+  "payload": {
+    "zone_id": "zone-cam1-browse-left",
+    "zone_name": "browse_skincare_wall",
+    "zone_type": "browse_skincare",
+    "camera_id": "00000000-0000-0000-0000-000000000203",
+    "external_track_id": "00000000-0000-0000-0000-000000000101:c6ce6608-9bcf-40a0-bc5d-7956421925e8",
+    "class_label": "visitor",
+    "position": {
+      "x": 0.46,
+      "y": 0.57,
+      "space": "normalized"
+    },
+    "session_id": "04577c1a-e67f-49f6-9dac-44900b836d8a",
+    "dwell_ms": 45000,
+    "detector_mode": "yolo",
+    "store_id": "00000000-0000-0000-0000-000000000101"
+  }
+}

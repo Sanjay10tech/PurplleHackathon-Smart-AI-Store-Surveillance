@@ -1,0 +1,60 @@
+$ C:\Python313\python.exe scripts/audit_funnel.py
+------------------------------------------------------------------------
+2026-05-30 21:22:54 [info     ] funnel_computed                dedupe_strategy=external_track_id entry_count=2 session_count=1 store_id=00000000-0000-0000-0000-000000000101 unique_visitors=22
+========================================================================
+CONVERSION FUNNEL AUDIT
+========================================================================
+
+Store: 00000000-0000-0000-0000-000000000101
+DB events ingested: 467
+Pipeline JSONL events generated: 652
+Unique visitors (SQL): 22
+Sessions: 1
+
+--- 1. Raw counts by event_type ---
+  vision.zone.entered            events= 146  distinct_tracks=21
+  vision.track.ended             events= 136  distinct_tracks=22
+  vision.frame.processed         events= 123  distinct_tracks=0
+  vision.zone.exited             events=  62  distinct_tracks=15
+
+--- 2-5. Funnel stages: raw events | distinct tracks | aggregated | dashboard ---
+  ENTRY          raw=   4  expected=  2  aggregated=  2  dashboard=  2  [OK]
+  ZONE_VISIT     raw= 115  expected= 14  aggregated= 14  dashboard= 14  [OK]
+  BILLING_QUEUE  raw=  15  expected=  5  aggregated=  5  dashboard=  5  [OK]
+  PURCHASE       raw=   0  expected=  0  aggregated=  0  dashboard=  0  [OK]
+
+========================================================================
+BEFORE (broken session-gated funnel)
+{
+  "unique_visitors": 22,
+  "ENTRY": 1,
+  "ZONE_VISIT": 0,
+  "BILLING_QUEUE": 0,
+  "PURCHASE": 0
+}
+
+AFTER (current)
+{
+  "ENTRY": 2,
+  "ZONE_VISIT": 14,
+  "BILLING_QUEUE": 5,
+  "PURCHASE": 0,
+  "unique_visitors": 22
+}
+
+PASS
+========================================================================
+
+[exit 0]
+
+--- YOLO full validation (validate_detection.py) ---
+correlation_id: validation-ea2a89c6e2ce
+videos_processed: 5
+total_frames_processed: 3491
+total_people_detections: 5314
+total_entry_events: 3
+processing_seconds: 1984.4
+
+--- Pipeline JSONL ---
+path: data\pipeline\events.jsonl
+events_written: 652

@@ -1,0 +1,6 @@
+ultralytics>=8.3.0
+supervision>=0.24.0
+opencv-python-headless>=4.8.0
+numpy>=1.26.0
+pyyaml>=6.0
+httpx>=0.28.0

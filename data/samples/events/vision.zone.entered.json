@@ -1,0 +1,32 @@
+{
+  "event_id": "56353a30-b1ae-4fb8-a550-ce0dee863bec",
+  "event_type": "vision.zone.entered",
+  "schema_version": "1.0.0",
+  "tenant_id": "00000000-0000-0000-0000-000000000001",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "occurred_at": "2026-05-31T15:28:08.503425Z",
+  "correlation_id": "sample-events",
+  "idempotency_key": "vision.zone.entered-00000000-0000-0000-0000-000000000101:c6ce6608-9bcf-40a0-bc5d-7956421925e8-zone-cam3-entry-threshold-1780241288503",
+  "aggregate": {
+    "type": "zone",
+    "id": "abbe61ac-fe62-5643-bf17-a66b700d9dec"
+  },
+  "payload": {
+    "zone_id": "zone-cam3-entry-threshold",
+    "zone_name": "entry_threshold",
+    "zone_type": "entry_threshold",
+    "camera_id": "00000000-0000-0000-0000-000000000203",
+    "external_track_id": "00000000-0000-0000-0000-000000000101:c6ce6608-9bcf-40a0-bc5d-7956421925e8",
+    "class_label": "visitor",
+    "position": {
+      "x": 0.46,
+      "y": 0.57,
+      "space": "normalized"
+    },
+    "session_id": "04577c1a-e67f-49f6-9dac-44900b836d8a",
+    "direction": "in",
+    "is_store_entry": true,
+    "detector_mode": "yolo",
+    "store_id": "00000000-0000-0000-0000-000000000101"
+  }
+}

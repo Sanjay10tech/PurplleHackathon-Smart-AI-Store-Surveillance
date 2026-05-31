@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-05-30T18:43:34.181036+00:00",
+  "workflow": ".github/workflows/ci.yml",
+  "python": "3.11",
+  "coverage_gate": 96,
+  "pytest": {
+    "success": true,
+    "passed": 270,
+    "coverage_pct": 96.53,
+    "lines_valid": 2836,
+    "lines_covered": 2780,
+    "tests": 270,
+    "failures": 0,
+    "recorded_at": "2026-05-30T18:40:00+00:00",
+    "errors": 0
+  },
+  "validation": {
+    "success": true,
+    "summary": "7/7 checks passed",
+    "stdout_tail": [
+      "[PASS] GET /health",
+      "[PASS] GET /health/ready",
+      "[PASS] GET /metrics",
+      "[PASS] GET /funnel",
+      "[PASS] GET /heatmap",
+      "[PASS] GET /anomalies",
+      "[PASS] GET /health after checks",
+      "",
+      "7/7 checks passed"
+    ],
+    "recorded_at": "2026-05-30T18:40:00+00:00"
+  },
+  "docker_compose": {
+    "verified_at": "2026-05-30T18:41:40.320495+00:00",
+    "api_base": "http://localhost:8000",
+    "success": true,
+    "step": "validation",
+    "compose_ps": "{\"Command\":\"\\\"python scripts/dock\u00e2\u20ac\u00a6\\\"\",\"CreatedAt\":\"2026-05-31 00:11:16 +0530 IST\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"ab8901091c68\",\"Image\":\"smart-ai-storesurveillance-api\",\"Labels\":\"com.docker.compose.image=sha256:42146aee3b6aecbe03818f1e1c33eb56e21b12171e16ee285bcf50d042ba9a68,com.docker.compose.oneoff=False,com.docker.compose.project=smart-ai-storesurveillance,com.docker.compose.project.config_files=C:\\\\Users\\\\DELL\\\\Desktop\\\\Smart-AI-StoreSurveillance\\\\docker-compose.yml,com.docker.compose.service=api,com.docker.compose.project.working_dir=C:\\\\Users\\\\DELL\\\\Desktop\\\\Smart-AI-StoreSurveillance,com.docker.compose.version=5.1.3,desktop.docker.io/ports.scheme=v2,desktop.docker.io/ports/8000/tcp=:8000,com.docker.compose.config-hash=5766f406f69c65a29ff4d9f701d4b1699608e765d63535be4dded1b991d18da4,com.docker.compose.container-number=1,com.docker.compose.depends_on=postgres:service_healthy:false\",\"LocalVolumes\":\"0\",\"Mounts\":\"\",\"Name\":\"smart-ai-storesurveillance-api-1\",\"Names\":\"smart-ai-storesurveillance-api-1\",\"Networks\":\"smart-ai-storesurveillance_default\",\"Ports\":\"0.0.0.0:8000-\\u003e8000/tcp, [::]:8000-\\u003e8000/tcp\",\"Project\":\"smart-ai-storesurveillance\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":8000,\"PublishedPort\":8000,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":8000,\"PublishedPort\":8000,\"Protocol\":\"tcp\"}],\"RunningFor\":\"19 seconds ago\",\"Service\":\"api\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 11 seconds (healthy)\"}\n{\"Command\":\"\\\"docker-entrypoint.s\u00e2\u20ac\u00a6\\\"\",\"CreatedAt\":\"2026-05-31 00:11:15 +0530 IST\",\"ExitCode\":0,\"Health\":\"healthy\",\"ID\":\"5918a0dd4bc8\",\"Image\":\"postgres:16-alpine\",\"Labels\":\"com.docker.compose.container-number=1,com.docker.compose.project=smart-ai-storesurveillance,com.docker.compose.project.config_files=C:\\\\Users\\\\DELL\\\\Desktop\\\\Smart-AI-StoreSurveillance\\\\docker-compose.yml,com.docker.compose.project.working_dir=C:\\\\Users\\\\DELL\\\\Desktop\\\\Smart-AI-StoreSurveillance,com.docker.compose.version=5.1.3,desktop.docker.io/ports/5432/tcp=:5432,com.docker.compose.config-hash=ddab1e055630e2c5a49b5b050fc3125f2d2f6b328eabb9f7993865d305540262,com.docker.compose.depends_on=,com.docker.compose.image=sha256:16bc17c64a573ef34162af9298258d1aec548232985b33ed7b1eac33ba35c229,com.docker.compose.oneoff=False,com.docker.compose.service=postgres,desktop.docker.io/ports.scheme=v2\",\"LocalVolumes\":\"1\",\"Mounts\":\"smart-ai-store\u00e2\u20ac\u00a6\",\"Name\":\"smart-ai-storesurveillance-postgres-1\",\"Names\":\"smart-ai-storesurveillance-postgres-1\",\"Networks\":\"smart-ai-storesurveillance_default\",\"Ports\":\"0.0.0.0:5432-\\u003e5432/tcp, [::]:5432-\\u003e5432/tcp\",\"Project\":\"smart-ai-storesurveillance\",\"Publishers\":[{\"URL\":\"0.0.0.0\",\"TargetPort\":5432,\"PublishedPort\":5432,\"Protocol\":\"tcp\"},{\"URL\":\"::\",\"TargetPort\":5432,\"PublishedPort\":5432,\"Protocol\":\"tcp\"}],\"RunningFor\":\"20 seconds ago\",\"Service\":\"postgres\",\"Size\":\"0B\",\"State\":\"running\",\"Status\":\"Up 18 seconds (healthy)\"}",
+    "validation_summary": "7/7 checks passed",
+    "validation_stdout_tail": [
+      "[PASS] GET /metrics",
+      "       partial ok: Analytics awaiting CCTV vision events. Ingest vision.* event",
+      "[PASS] GET /funnel",
+      "       ENTRY count=0, rates bounded",
+      "[PASS] GET /heatmap",
+      "       empty heatmap (partial ok)",
+      "[PASS] GET /anomalies",
+      "       items=1",
+      "[PASS] GET /health after checks",
+      "       status=degraded, feed=unknown",
+      "",
+      "7/7 checks passed"
+    ],
+    "validation_stderr_tail": []
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-05-30T16:50:17.726608+00:00",
+  "pipeline": {
+    "legacy": {
+      "mode": "legacy",
+      "max_frames_per_camera": 80,
+      "metrics": {
+        "unique_global_ids": 4,
+        "visitor_global_ids": 3,
+        "staff_global_ids": 2,
+        "local_track_fragments": 382,
+        "global_id_switches": 0,
+        "cross_camera_links": 2,
+        "visitor_sessions": 1,
+        "duplicate_session_ids": 0,
+        "reentry_sessions": 0,
+        "cameras_per_top_visitor": 3,
+        "details": {
+          "expected_visitor_global_ids": 1,
+          "expected_staff_global_ids": 1,
+          "expected_visitor_sessions": 1
+        }
+      },
+      "scores": {
+        "visitor_id_accuracy": 0.0,
+        "session_accuracy": 1.0,
+        "id_switch_rate": 0.0,
+        "cross_camera_link_score": 0.75,
+        "overall_score": 0.6
+      }
+    },
+    "improved": {
+      "mode": "improved",
+      "max_frames_per_camera": 80,
+      "metrics": {
+        "unique_global_ids": 2,
+        "visitor_global_ids": 1,
+        "staff_global_ids": 2,
+        "local_track_fragments": 382,
+        "global_id_switches": 0,
+        "cross_camera_links": 1,
+        "visitor_sessions": 0,
+        "duplicate_session_ids": 0,
+        "reentry_sessions": 0,
+        "cameras_per_top_visitor": 4,
+        "details": {
+          "expected_visitor_global_ids": 1,
+          "expected_staff_global_ids": 1,
+          "expected_visitor_sessions": 1
+        }
+      },
+      "scores": {
+        "visitor_id_accuracy": 1.0,
+        "session_accuracy": 0.0,
+        "id_switch_rate": 0.0,
+        "cross_camera_link_score": 1.0,
+        "overall_score": 0.75
+      }
+    }
+  },
+  "evidence": {
+    "store_id": "00000000-0000-0000-0000-000000000101",
+    "period_start": "2026-01-01T00:00:00Z",
+    "period_end": "2026-12-31T00:00:00Z",
+    "unique_track_ids": 22,
+    "single_camera_tracks": 22,
+    "cross_camera_track_count": 0,
+    "cross_camera_tracks": [],
+    "handoff_candidates": [],
+    "pipeline_strategy": {
+      "per_camera_tracker": "ByteTrack",
+      "global_registry": "GlobalIdentityRegistry (GIR)",
+      "embedding": "HSV histogram 512-d (AppearanceEmbedder)",
+      "cross_camera_signals": [
+        "cosine similarity",
+        "camera graph P0/P1 handoff windows",
+        "time gap scoring",
+        "TrackRecoveryRegistry (same-camera ID switch)",
+        "P0 solo handoff (single active visitor on source cam)"
+      ],
+      "external_track_id_format": "{store_id}:{global_uuid}"
+    },
+    "meta": {
+      "vision_events_analyzed": 344,
+      "handoff_candidate_count": 0,
+      "reid_enabled": true,
+      "source": "reid_evidence_engine"
+    }
+  }
+}

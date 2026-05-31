@@ -1,0 +1,47 @@
+{
+  "event_id": "f9883ddb-57aa-49eb-9337-44a7a867ebf7",
+  "event_type": "vision.frame.processed",
+  "schema_version": "1.0.0",
+  "tenant_id": "00000000-0000-0000-0000-000000000001",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "occurred_at": "2026-05-31T15:28:08.503425Z",
+  "correlation_id": "sample-events",
+  "idempotency_key": "frame-00000000-0000-0000-0000-000000000203-120-38c142ee-c0d7-49f5-828a-547900cbf43a",
+  "aggregate": {
+    "type": "pipeline_run",
+    "id": "38c142ee-c0d7-49f5-828a-547900cbf43a"
+  },
+  "payload": {
+    "pipeline_run_id": "38c142ee-c0d7-49f5-828a-547900cbf43a",
+    "camera_id": "00000000-0000-0000-0000-000000000203",
+    "frame_index": 120,
+    "frame_timestamp": "2026-05-31T15:28:08.503425Z",
+    "detections": [
+      {
+        "detection_id": "9b3790ff-09cb-4fa9-b1c3-77b1d08abc8f",
+        "class_external_id": "visitor",
+        "bbox": {
+          "x": 0.42,
+          "y": 0.35,
+          "w": 0.08,
+          "h": 0.22,
+          "space": "normalized"
+        },
+        "confidence": 0.91
+      }
+    ],
+    "tracks": [
+      {
+        "track_id": "e69a8d73-01f8-4467-be69-a96388fb149a",
+        "track_id_ext": 1,
+        "detection_id": "9b3790ff-09cb-4fa9-b1c3-77b1d08abc8f",
+        "state": "active",
+        "external_track_id": "00000000-0000-0000-0000-000000000101:c6ce6608-9bcf-40a0-bc5d-7956421925e8"
+      }
+    ],
+    "processing_ms": 42,
+    "detector_mode": "yolo",
+    "source_video": null,
+    "store_id": "00000000-0000-0000-0000-000000000101"
+  }
+}

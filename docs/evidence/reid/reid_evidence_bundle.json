@@ -1,0 +1,148 @@
+{
+  "generated_at": "2026-05-30T18:05:03.289655+00:00",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "pipeline_mode": "mock_trajectory + GIR (mock_shared_visitor_embedding)",
+  "visitor_global_id": "00000000-0000-0000-0000-000000000101:2f480ec8-6240-49d3-9875-36f76b64561d",
+  "visitor_global_uuid": "2f480ec8-6240-49d3-9875-36f76b64561d",
+  "cameras_linked": 4,
+  "camera_observations": [
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000203",
+      "camera_name": "CAM 3",
+      "role": "entry",
+      "frame_index": 474,
+      "timestamp": "2026-05-30T17:52:25.339665+00:00",
+      "local_track_id": 2,
+      "global_id": "00000000-0000-0000-0000-000000000101:2f480ec8-6240-49d3-9875-36f76b64561d",
+      "global_uuid": "2f480ec8-6240-49d3-9875-36f76b64561d",
+      "detection_confidence": 0.55,
+      "screenshot": "docs/evidence/reid/screenshots/visitor_CAM_3_203.jpg",
+      "match_method": "new_global_id",
+      "match_score": 1.0,
+      "cosine_similarity": null,
+      "time_gap_seconds": null
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000201",
+      "camera_name": "CAM 1",
+      "role": "floor",
+      "frame_index": 474,
+      "timestamp": "2026-05-30T17:52:46.339665+00:00",
+      "local_track_id": 2,
+      "global_id": "00000000-0000-0000-0000-000000000101:2f480ec8-6240-49d3-9875-36f76b64561d",
+      "global_uuid": "2f480ec8-6240-49d3-9875-36f76b64561d",
+      "detection_confidence": 0.55,
+      "screenshot": "docs/evidence/reid/screenshots/visitor_CAM_1_201.jpg",
+      "match_method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "cosine_similarity": null,
+      "time_gap_seconds": 21.0
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000202",
+      "camera_name": "CAM 2",
+      "role": "floor",
+      "frame_index": 474,
+      "timestamp": "2026-05-30T17:53:07.339665+00:00",
+      "local_track_id": 2,
+      "global_id": "00000000-0000-0000-0000-000000000101:2f480ec8-6240-49d3-9875-36f76b64561d",
+      "global_uuid": "2f480ec8-6240-49d3-9875-36f76b64561d",
+      "detection_confidence": 0.55,
+      "screenshot": "docs/evidence/reid/screenshots/visitor_CAM_2_202.jpg",
+      "match_method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "cosine_similarity": null,
+      "time_gap_seconds": 21.0
+    },
+    {
+      "camera_id": "00000000-0000-0000-0000-000000000205",
+      "camera_name": "CAM 5",
+      "role": "billing",
+      "frame_index": 165,
+      "timestamp": "2026-05-30T17:53:19.139665+00:00",
+      "local_track_id": 2,
+      "global_id": "00000000-0000-0000-0000-000000000101:2f480ec8-6240-49d3-9875-36f76b64561d",
+      "global_uuid": "2f480ec8-6240-49d3-9875-36f76b64561d",
+      "detection_confidence": 0.55,
+      "screenshot": "docs/evidence/reid/screenshots/visitor_CAM_5_205.jpg",
+      "match_method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "cosine_similarity": null,
+      "time_gap_seconds": 11.8
+    }
+  ],
+  "handoffs": [
+    {
+      "from_camera": "CAM 3",
+      "to_camera": "CAM 1",
+      "from_camera_id": "00000000-0000-0000-0000-000000000203",
+      "to_camera_id": "00000000-0000-0000-0000-000000000201",
+      "method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "note": "single active visitor on P0 source",
+      "time_gap_seconds": 21.0
+    },
+    {
+      "from_camera": "CAM 1",
+      "to_camera": "CAM 2",
+      "from_camera_id": "00000000-0000-0000-0000-000000000201",
+      "to_camera_id": "00000000-0000-0000-0000-000000000202",
+      "method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "note": "single active visitor on P0 source",
+      "time_gap_seconds": 21.0
+    },
+    {
+      "from_camera": "CAM 2",
+      "to_camera": "CAM 5",
+      "from_camera_id": "00000000-0000-0000-0000-000000000202",
+      "to_camera_id": "00000000-0000-0000-0000-000000000205",
+      "method": "p0_solo_handoff",
+      "match_score": 0.85,
+      "note": "single active visitor on P0 source",
+      "time_gap_seconds": 11.8
+    }
+  ],
+  "event_trail_count": 5,
+  "metrics": {
+    "unique_global_ids": 2,
+    "visitor_global_ids": 1,
+    "staff_global_ids": 2,
+    "local_track_fragments": 382,
+    "global_id_switches": 0,
+    "cross_camera_links": 1,
+    "visitor_sessions": 0,
+    "duplicate_session_ids": 0,
+    "reentry_sessions": 0,
+    "cameras_per_top_visitor": 4,
+    "details": {
+      "expected_visitor_global_ids": 1,
+      "expected_staff_global_ids": 1,
+      "expected_visitor_sessions": 1
+    }
+  },
+  "scores": {
+    "visitor_id_accuracy": 1.0,
+    "session_accuracy": 0.0,
+    "id_switch_rate": 0.0,
+    "cross_camera_link_score": 1.0,
+    "overall_score": 0.75
+  },
+  "matching_logic": {
+    "registry": "GlobalIdentityRegistry (shared across MultiCameraPipeline)",
+    "embedding": "AppearanceEmbedder \u2014 512-d HSV histogram",
+    "mock_mode_note": "mock_shared_visitor_embedding=true stabilizes cross-camera cosine for demo proof",
+    "score_formula": "0.55\u00d7cosine + 0.20\u00d7time_gap + 0.15\u00d7camera_graph + 0.10\u00d7apparel_color",
+    "thresholds": {
+      "match_score_threshold": 0.68,
+      "cosine_threshold": 0.55
+    },
+    "fallback": "P0 solo handoff when exactly one visitor active on source camera within window",
+    "camera_graph_p0": [
+      "CAM 3 \u2192 CAM 1",
+      "CAM 3 \u2192 CAM 2",
+      "CAM 1 \u2192 CAM 5",
+      "CAM 2 \u2192 CAM 5"
+    ]
+  }
+}

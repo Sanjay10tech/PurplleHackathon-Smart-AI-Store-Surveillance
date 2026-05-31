@@ -1,0 +1,170 @@
+{
+  "generated_at": "2026-05-30T16:02:25.234645+00:00",
+  "store_id": "00000000-0000-0000-0000-000000000101",
+  "stages": [
+    {
+      "stage": "ENTRY",
+      "count": 2,
+      "re_entry_count": 3,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "raw_events": 4,
+      "distinct_tracks": 2
+    },
+    {
+      "stage": "ZONE_VISIT",
+      "count": 14,
+      "re_entry_count": 101,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "raw_events": 115,
+      "distinct_tracks": 14
+    },
+    {
+      "stage": "BILLING_QUEUE",
+      "count": 5,
+      "re_entry_count": 10,
+      "conversion_rate": 0.0,
+      "drop_off_rate": 1.0,
+      "raw_events": 15,
+      "distinct_tracks": 5
+    },
+    {
+      "stage": "PURCHASE",
+      "count": 0,
+      "re_entry_count": 0,
+      "conversion_rate": null,
+      "drop_off_rate": null,
+      "raw_events": 0,
+      "distinct_tracks": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "ENTRY first-touch = distinct tracks",
+      "passed": true,
+      "detail": "funnel=2 sql_distinct=2 raw_events=4"
+    },
+    {
+      "name": "ZONE_VISIT first-touch = distinct tracks",
+      "passed": true,
+      "detail": "funnel=14 sql_distinct=14 raw_events=115"
+    },
+    {
+      "name": "BILLING_QUEUE first-touch = distinct tracks",
+      "passed": true,
+      "detail": "funnel=5 sql_distinct=5 raw_events=15"
+    },
+    {
+      "name": "PURCHASE first-touch = distinct tracks",
+      "passed": true,
+      "detail": "funnel=0 sql_distinct=0 raw_events=0"
+    },
+    {
+      "name": "ENTRY conversion bounded",
+      "passed": true,
+      "detail": "conversion_rate=0.0"
+    },
+    {
+      "name": "ENTRY drop-off bounded",
+      "passed": true,
+      "detail": "drop_off_rate=1.0"
+    },
+    {
+      "name": "ZONE_VISIT conversion bounded",
+      "passed": true,
+      "detail": "conversion_rate=0.0"
+    },
+    {
+      "name": "ZONE_VISIT drop-off bounded",
+      "passed": true,
+      "detail": "drop_off_rate=1.0"
+    },
+    {
+      "name": "BILLING_QUEUE conversion bounded",
+      "passed": true,
+      "detail": "conversion_rate=0.0"
+    },
+    {
+      "name": "BILLING_QUEUE drop-off bounded",
+      "passed": true,
+      "detail": "drop_off_rate=1.0"
+    },
+    {
+      "name": "Re-entries tracked separately",
+      "passed": true,
+      "detail": "total_re_entries=114"
+    },
+    {
+      "name": "Staff zone events excluded from funnel SQL baseline",
+      "passed": true,
+      "detail": "staff_events=12 staff_tracks=3"
+    },
+    {
+      "name": "Session-based ENTRY path present",
+      "passed": true,
+      "detail": "customer_sessions=1 funnel_entry=2"
+    },
+    {
+      "name": "Calculator replay matches API",
+      "passed": true,
+      "detail": "replay={'ENTRY': 2, 'ZONE_VISIT': 14, 'BILLING_QUEUE': 5, 'PURCHASE': 0} api={'ENTRY': 2, 'ZONE_VISIT': 14, 'BILLING_QUEUE': 5, 'PURCHASE': 0}"
+    },
+    {
+      "name": "Zone-only tracks allowed (floor cam without entry line)",
+      "passed": true,
+      "detail": "entry=2 zone=14 zone_only_tracks=12"
+    },
+    {
+      "name": "audit_funnel.py PASS",
+      "passed": true,
+      "detail": "========================================================================"
+    }
+  ],
+  "funnel": {
+    "unique_visitors": 22,
+    "session_count": 1,
+    "stages": [
+      {
+        "stage": "ENTRY",
+        "count": 2,
+        "re_entry_count": 3,
+        "conversion_rate": 0.0,
+        "drop_off_rate": 1.0
+      },
+      {
+        "stage": "ZONE_VISIT",
+        "count": 14,
+        "re_entry_count": 101,
+        "conversion_rate": 0.0,
+        "drop_off_rate": 1.0
+      },
+      {
+        "stage": "BILLING_QUEUE",
+        "count": 5,
+        "re_entry_count": 10,
+        "conversion_rate": 0.0,
+        "drop_off_rate": 1.0
+      },
+      {
+        "stage": "PURCHASE",
+        "count": 0,
+        "re_entry_count": 0,
+        "conversion_rate": null,
+        "drop_off_rate": null
+      }
+    ]
+  },
+  "staff_stats": {
+    "events": 12,
+    "tracks": 3
+  },
+  "staff_signals_blocked": 12,
+  "track_overlap": {
+    "entry_zone": 0,
+    "zone_billing": 0,
+    "entry_billing": 0
+  },
+  "audit_excerpt": "2026-05-30 21:32:24 [info     ] funnel_computed                dedupe_strategy=external_track_id entry_count=2 session_count=1 store_id=00000000-0000-0000-0000-000000000101 unique_visitors=22\n========================================================================\nCONVERSION FUNNEL AUDIT\n========================================================================\n\nStore: 00000000-0000-0000-0000-000000000101\nDB events ingested: 467\nPipeline JSONL events generated: 652\nUnique visitors (SQL): 22\nSessions: 1\n\n--- 1. Raw counts by event_type ---\n  vision.zone.entered            events= 146  distinct_tracks=21\n  vision.track.ended             events= 136  distinct_tracks=22\n  vision.frame.processed         events= 123  distinct_tracks=0\n  vision.zone.exited             events=  62  distinct_tracks=15\n\n--- 2-5. Funnel stages: raw events | distinct tracks | aggregated | dashboard ---\n  ENTRY          raw=   4  expected=  2  aggregated=  2  dashboard=  2  [OK]\n  ZONE_VISIT     raw= 115  expected= 14  aggregated= 14  dashboard= 14  [OK]\n  BILLING_QUEUE  raw=  15  expected=  5  aggregated=  5  dashboard=  5  [OK]\n  PURCHASE       raw=   0  expected=  0  aggregated=  0  dashboard=  0  [OK]\n\n========================================================================\nBEFORE (broken session-gated funnel)\n{\n  \"unique_visitors\": 22,\n  \"ENTRY\": 1,\n  \"ZONE_VISIT\": 0,\n  \"BILLING_QUEUE\": 0,\n  \"PURCHASE\": 0\n}\n\nAFTER (current)\n{\n  \"ENTRY\": 2,\n  \"ZONE_VISIT\": 14,\n  \"BILLING_QUEUE\": 5,\n  \"PURCHASE\": 0,\n  \"unique_visitors\": 22\n}\n\nPASS\n========================================================================\n",
+  "overall_pass": true
+}

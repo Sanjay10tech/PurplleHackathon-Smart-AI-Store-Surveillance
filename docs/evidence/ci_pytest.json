@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "passed": 270,
+  "coverage_pct": 96.53,
+  "lines_valid": 2836,
+  "lines_covered": 2780,
+  "tests": 270,
+  "failures": 0,
+  "recorded_at": "2026-05-30T18:40:00+00:00"
+}

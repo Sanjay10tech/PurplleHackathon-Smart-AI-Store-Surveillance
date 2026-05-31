@@ -1,0 +1,236 @@
+# Pipeline configuration — override via env vars prefixed PIPELINE_ (see config.py)
+
+store_id: "00000000-0000-0000-0000-000000000101"
+tenant_id: "00000000-0000-0000-0000-000000000001"
+schema_version: "1.0.0"
+
+detector:
+  mode: "yolo"  # yolo | mock
+  model: "yolo11n.pt"
+  confidence: 0.35
+  iou: 0.45
+  device: ""  # empty = auto
+  person_class_id: 0
+  imgsz: 960
+  max_det: 8
+  min_bbox_height: 0.085
+  min_bbox_area: 0.007
+  max_bbox_area: 0.32
+  min_aspect_ratio: 1.2
+  max_aspect_ratio: 5.5
+  per_camera:
+    "00000000-0000-0000-0000-000000000201":
+      confidence: 0.40
+      iou: 0.50
+    "00000000-0000-0000-0000-000000000202":
+      confidence: 0.42
+      iou: 0.42
+    "00000000-0000-0000-0000-000000000203":
+      confidence: 0.32
+      iou: 0.45
+    "00000000-0000-0000-0000-000000000204":
+      confidence: 0.45
+      iou: 0.50
+    "00000000-0000-0000-0000-000000000205":
+      confidence: 0.35
+      iou: 0.40
+  # Per-camera foot paths used when --mock reads real MP4s (trajectory overlay).
+  mock_trajectories:
+    "00000000-0000-0000-0000-000000000201":
+      - [0.45, 0.50]
+      - [0.48, 0.55]
+      - [0.50, 0.60]
+      - [0.52, 0.65]
+      - [0.50, 0.70]
+    "00000000-0000-0000-0000-000000000202":
+      - [0.40, 0.45]
+      - [0.42, 0.50]
+      - [0.45, 0.55]
+      - [0.48, 0.60]
+    "00000000-0000-0000-0000-000000000203":
+      - [0.30, 0.20]
+      - [0.35, 0.25]
+      - [0.38, 0.30]
+      - [0.42, 0.38]
+      - [0.46, 0.46]
+      - [0.50, 0.54]
+      - [0.52, 0.58]
+      # Dwell inside store so exit line-cross clears line_debounce (2s @ 5fps)
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.52, 0.58]
+      - [0.50, 0.54]
+      - [0.46, 0.46]
+      - [0.42, 0.38]
+      - [0.38, 0.30]
+      - [0.35, 0.25]
+      - [0.30, 0.20]
+    "00000000-0000-0000-0000-000000000204":
+      - [0.50, 0.50]
+      - [0.52, 0.55]
+      - [0.54, 0.60]
+    "00000000-0000-0000-0000-000000000205":
+      - [0.12, 0.50]
+      - [0.15, 0.58]
+      - [0.18, 0.66]
+      - [0.22, 0.72]
+      - [0.25, 0.78]
+
+tracker:
+  track_thresh: 0.30
+  track_buffer: 75
+  match_thresh: 0.72
+  frame_rate: 5
+  mock_track_thresh: 0.22
+  mock_match_thresh: 0.48
+  mock_track_buffer: 100
+
+zone_analysis:
+  line_hysteresis: 0.008
+  line_debounce_seconds: 2.0
+  polygon_hysteresis: 0.012
+  min_dwell_before_exit_ms: 500
+  min_line_cross_displacement: 0.015
+  same_type_debounce_seconds: 3.0
+  dedupe_after_seconds: 15.0
+
+processing:
+  sample_fps: 5.0
+  emit_frame_events_every_n: 30
+  batch_size: 100
+
+reid:
+  enabled: true
+  p0_solo_handoff_enabled: true
+  embedding_dim: 512
+  cosine_threshold: 0.55
+  match_score_threshold: 0.68
+  no_embedding_match_threshold: 0.58
+  same_camera_cosine_threshold: 0.40
+  same_camera_recovery_enabled: true
+  same_camera_recovery_seconds: 20
+  same_camera_foot_threshold: 0.18
+  same_camera_recovery_threshold: 0.52
+  embedding_ema_alpha: 0.35
+  mock_shared_visitor_embedding: true
+  registry_ttl_seconds: 2700
+  min_crop_height_px: 60
+  weights:
+    cosine: 0.55
+    time_gap: 0.20
+    camera_graph: 0.15
+    apparel_color: 0.10
+  handoff_seconds:
+    entry_to_floor: 150
+    floor_to_billing: 210
+    billing_to_backroom: 300
+    floor_to_floor: 270
+
+staff:
+  dark_pixel_ratio_threshold: 0.70
+  dark_value_threshold: 80
+  uniform_torso_fraction: 0.60
+  uniform_frames_required: 60
+  uniform_frames_required_billing: 30
+  counter_dwell_seconds: 300
+  billing_zone_dwell_seconds: 120
+  consultation_dwell_seconds: 600
+  billing_presence_seconds: 180
+  long_presence_seconds: 900
+  backroom_camera_roles:
+    - backroom
+  billing_camera_roles:
+    - billing
+  billing_zone_types:
+    - billing_queue
+    - checkout
+  consultation_zone_types:
+    - consultation
+  shuttle_min_cycles: 3
+  shuttle_zone_pairs:
+    - [consultation, aisle]
+    - [billing_queue, aisle]
+  movement_history_max: 120
+  zone_visit_history_max: 24
+  loiter_path_ratio: 4.0
+  loiter_min_path_norm: 0.15
+  exclude_from_footfall: true
+
+session:
+  reentry_cooldown_minutes: 30
+  merge_active_within_seconds: 45
+  end_on_store_exit: true
+
+overlap_dedup:
+  enabled: true
+  default_within_seconds: 180
+  rules:
+    - suppress_camera: "00000000-0000-0000-0000-000000000201"
+      suppress_zone_types: [aisle, browse_skincare]
+      when_active:
+        camera: "00000000-0000-0000-0000-000000000205"
+        zone_types: [billing_queue, checkout]
+      within_seconds: 180
+    - suppress_camera: "00000000-0000-0000-0000-000000000202"
+      suppress_zone_types: [aisle]
+      when_active:
+        camera: "00000000-0000-0000-0000-000000000203"
+        zone_types: [entry_threshold, entrance]
+      within_seconds: 30
+
+emit:
+  output_jsonl: "data/pipeline/events.jsonl"
+  output_sessions_jsonl: "data/pipeline/sessions.jsonl"
+  api_url: "http://localhost:8000/api/v1/events/ingest"
+  post_to_api: false
+  persist_sessions: false
+  validate_before_post: true
+  database_url: ""  # uses DATABASE_URL env when empty
+
+cameras:
+  - id: "00000000-0000-0000-0000-000000000201"
+    name: "CAM 1"
+    role: floor
+    video: "data/videos/CAM 1.mp4"
+  - id: "00000000-0000-0000-0000-000000000202"
+    name: "CAM 2"
+    role: floor
+    video: "data/videos/CAM 2.mp4"
+  - id: "00000000-0000-0000-0000-000000000203"
+    name: "CAM 3"
+    role: entry
+    video: "data/videos/CAM 3.mp4"
+  - id: "00000000-0000-0000-0000-000000000204"
+    name: "CAM 4"
+    role: backroom
+    video: "data/videos/CAM 4.mp4"
+  - id: "00000000-0000-0000-0000-000000000205"
+    name: "CAM 5"
+    role: billing
+    video: "data/videos/CAM 5.mp4"
+
+camera_graph:
+  - from: "00000000-0000-0000-0000-000000000203"
+    to: "00000000-0000-0000-0000-000000000201"
+    priority: P0
+  - from: "00000000-0000-0000-0000-000000000203"
+    to: "00000000-0000-0000-0000-000000000202"
+    priority: P0
+  - from: "00000000-0000-0000-0000-000000000201"
+    to: "00000000-0000-0000-0000-000000000205"
+    priority: P0
+  - from: "00000000-0000-0000-0000-000000000202"
+    to: "00000000-0000-0000-0000-000000000205"
+    priority: P0
+  - from: "00000000-0000-0000-0000-000000000205"
+    to: "00000000-0000-0000-0000-000000000204"
+    priority: P1

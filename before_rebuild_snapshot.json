@@ -1,0 +1,115 @@
+﻿python : Traceback (most recent call last):
+At C:\Users\DELL\AppData\Local\Temp\ps-script-7de11f92-f24b-4ae1-801e-62659fe00875.ps1:103 char:136
++ ... re_intelligence"; python scripts/reviewer_pg_snapshot.py 2>&1 | Out-F ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\DELL\Desktop\Smart-AI-StoreSurveillance\scripts\reviewer_pg_snapshot.py", line 186, in <module>
+    raise SystemExit(asyncio.run(_main()))
+                     ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\Desktop\Smart-AI-StoreSurveillance\scripts\reviewer_pg_snapshot.py", line 181, in _main
+    print(json.dumps(await snapshot(), indent=2, default=str))
+                     ^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\Desktop\Smart-AI-StoreSurveillance\scripts\reviewer_pg_snapshot.py", line 45, in snapshot
+    async with engine.connect() as conn:
+               ~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\ext\asyncio\base.py", line 121, in 
+__aenter__
+    return await self.start(is_ctxmanager=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\ext\asyncio\engine.py", line 275, in 
+start
+    await greenlet_spawn(self.sync_engine.connect)
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 201, 
+in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 3295, in connect
+    return self._connection_cls(self)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 144, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\base.py", line 3319, in 
+raw_connection
+    return self.pool.connect()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 448, in connect
+    return _ConnectionFairy._checkout(self)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 1272, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 712, in checkout
+    rec = pool._do_get()
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\impl.py", line 178, in _do_get
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 122, in 
+__exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\impl.py", line 176, in _do_get
+    return self._create_connection()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 389, in 
+_create_connection
+    return _ConnectionRecord(self)
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 674, in __init__
+    self.__connect()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 900, in __connect
+    with util.safe_reraise():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\langhelpers.py", line 122, in 
+__exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\pool\base.py", line 896, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\create.py", line 667, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\engine\default.py", line 630, in 
+connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 
+955, in connect
+    await_only(creator_fn(*arg, **kw)),
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 132, 
+in await_only
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return,attr-defined] # noqa: E501
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\sqlalchemy\util\_concurrency_py3k.py", line 196, 
+in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\asyncpg\connection.py", line 2443, in connect
+    return await connect_utils._connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<22 lines>...
+    )
+    ^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\asyncpg\connect_utils.py", line 1218, in _connect
+    conn = await _connect_addr(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\asyncpg\connect_utils.py", line 1054, in 
+_connect_addr
+    return await __connect_addr(params, True, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\DELL\AppData\Roaming\Python\Python313\site-packages\asyncpg\connect_utils.py", line 1102, in 
+__connect_addr
+    await connected
+asyncpg.exceptions.CannotConnectNowError: the database system is shutting down
