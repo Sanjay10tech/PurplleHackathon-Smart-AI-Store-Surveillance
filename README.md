@@ -8,6 +8,33 @@ Turn CCTV footage and POS orders into retail analytics: footfall, zone heatmaps,
 
 ---
 
+## CCTV Video Assets
+
+The CCTV video files are not included in this submission package due to the HackerEarth 50 MB upload limit.
+
+Download the challenge video assets from:
+
+https://drive.google.com/drive/folders/1GtSXGw57IrmYLRxBfecaBvt6_zfSTBNe?usp=drive_link
+
+Place all downloaded video files inside:
+
+data/videos/
+
+Expected files:
+
+* CAM1.mp4
+* CAM2.mp4
+* CAM3.mp4
+* CAM4.mp4
+* CAM5.mp4
+
+After placing the files, run:
+
+docker compose up
+
+The pipeline will automatically discover and process all available CCTV videos.
+
+
 ## Project Overview
 
 Store Intelligence answers: *How many shoppers entered, where did they go, how many reached billing, and how many purchased?*
