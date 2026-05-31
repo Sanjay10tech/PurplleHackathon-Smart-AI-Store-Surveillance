@@ -31,6 +31,8 @@ The system does **not** fabricate dashboard KPIs. All numbers are computed from 
 ## Detailed Architecture
 
 This section is the primary architecture reference for reviewers and engineers. It follows **C4 model** levels (Context → Container → Component) plus deployment, data, and request-flow views. All diagrams reflect the **actual Phase 1 codebase**.
+
+```text
 Smart-AI-StoreSurveillance/          # Store Intelligence — CCTV → retail analytics (Phase 1)
 │
 ├── pipeline/                        # Offline CV worker (separate from API)
@@ -161,7 +163,7 @@ Smart-AI-StoreSurveillance/          # Store Intelligence — CCTV → retail an
 ├── DESIGN.md                        # Architecture + AI-assisted decisions
 ├── CHOICES.md                       # 3 engineering decisions (YOLO, schema, FastAPI)
 └── README.md                        # Runbook, endpoints, reviewer flow
-
+```
 ---
 
 
