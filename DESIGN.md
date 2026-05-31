@@ -161,6 +161,7 @@ Smart-AI-StoreSurveillance/          # Store Intelligence — CCTV → retail an
 ├── DESIGN.md                        # Architecture + AI-assisted decisions
 ├── CHOICES.md                       # 3 engineering decisions (YOLO, schema, FastAPI)
 └── README.md                        # Runbook, endpoints, reviewer flow
+
 ---
 
 
