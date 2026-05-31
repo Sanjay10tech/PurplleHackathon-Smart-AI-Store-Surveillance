@@ -27,6 +27,8 @@ def _run(cmd: list[str], *, check: bool = True, **kwargs) -> subprocess.Complete
         cwd=REPO_ROOT,
         check=check,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         capture_output=True,
         **kwargs,
     )

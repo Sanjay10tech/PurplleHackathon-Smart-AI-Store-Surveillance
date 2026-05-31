@@ -9,14 +9,15 @@ from uuid import UUID
 from sqlalchemy import String, cast, func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models import Event, Transaction, VisitSession, VisitSession
+from app.models import Event, Transaction, VisitSession
 
 STAFF_ZONE_TYPES = ("staff_only", "ignore")
 
 
 def _json_flag_true(column):
-    text = func.lower(cast(column, String))
-    return or_(text.in_(("true", "1")), column.is_(True))
+    """Match JSON/JSONB booleans and string flags without `IS TRUE` on jsonb."""
+    text = func.lower(func.coalesce(column.as_string(), ""))
+    return text.in_(("true", "1"))
 
 
 def _is_customer_class(class_label):
