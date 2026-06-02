@@ -5,6 +5,16 @@
 Turn CCTV footage and POS orders into retail analytics: footfall, zone heatmaps, conversion funnels, linked purchase journeys, and operational anomalies. Phase 1 ships a FastAPI backend, PostgreSQL storage, an offline YOLOv11 + ByteTrack pipeline, and a live dashboard fed by ingested events — not hardcoded KPIs.
 
 **Round 2 reviewer entry point:** [docs/REVIEWER_EVIDENCE.md](./docs/REVIEWER_EVIDENCE.md) · [docs/REVIEWER_API.md](./docs/REVIEWER_API.md)
+<img width="1337" height="670" alt="Screenshot 2026-06-02 141815" src="https://github.com/user-attachments/assets/c023f69e-f8fb-4b3c-94e0-66c7f2754d9a" />
+<img width="1340" height="684" alt="Screenshot 2026-06-02 141834" src="https://github.com/user-attachments/assets/baadcc43-3eb9-4a32-bbf5-9875edd1cb12" />
+
+<img width="1350" height="675" alt="Screenshot 2026-06-02 141852" src="https://github.com/user-attachments/assets/307335b3-eb16-4eab-b70c-5bed1d2a70fe" />
+<img width="1344" height="676" alt="Screenshot 2026-06-02 141913" src="https://github.com/user-attachments/assets/a0b096ba-f236-4eb0-aa7f-b308866aa4d1" />
+<img width="1341" height="659" alt="Screenshot 2026-06-02 141931" src="https://github.com/user-attachments/assets/3f14a058-bc9f-4eec-bcdb-b6daeb63c757" />
+<img width="1344" height="669" alt="Screenshot 2026-06-02 141947" src="https://github.com/user-attachments/assets/d3743e25-6a3e-4812-bd85-9bd6167f907d" />
+<img width="1347" height="666" alt="Screenshot 2026-06-02 142001" src="https://github.com/user-attachments/assets/8e0f720f-3c36-418c-9258-3636c31248cb" />
+<img width="1348" height="668" alt="Screenshot 2026-06-02 142018" src="https://github.com/user-attachments/assets/b6fa5100-f84c-4d21-a763-d6ff441ff56d" />
+<img width="897" height="205" alt="Screenshot 2026-06-02 142033" src="https://github.com/user-attachments/assets/6842db5b-b9b4-4e59-be86-61d15feb1ac1" />
 
 ---
 
