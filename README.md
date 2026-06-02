@@ -30,14 +30,6 @@ Place all downloaded video files inside:
 
 data/videos/
 
-Expected files:
-
-* CAM1.mp4
-* CAM2.mp4
-* CAM3.mp4
-* CAM4.mp4
-* CAM5.mp4
-
 After placing the files, run:
 
 docker compose up
@@ -60,6 +52,9 @@ Store Intelligence answers: *How many shoppers entered, where did they go, how m
 **Phase 1 (implemented):** REST API, ingest, BI engines, dashboard, WebSocket feed, Docker Compose, CI, real-YOLO pipeline path, reviewer bootstrap data.
 
 **Phase 2 (not deployed):** Redis Streams, MinIO frame storage, distributed GPU fleet, JWT auth, Kubernetes.
+<img width="1337" height="670" alt="Screenshot 2026-06-02 141815" src="https://github.com/user-attachments/assets/c023f69e-f8fb-4b3c-94e0-66c7f2754d9a" />
+<img width="1340" height="684" alt="Screenshot 2026-06-02 141834" src="https://github.com/user-attachments/assets/baadcc43-3eb9-4a32-bbf5-9875edd1cb12" />
+
 
 ---
 
